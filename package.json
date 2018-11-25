@@ -8,10 +8,12 @@
     "react-scripts": "2.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently 'npm run client' 'npm run server'",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "client": "react-scripts start",
+    "server": "nodemon ./server/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -21,5 +23,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.6"
+  }
 }
