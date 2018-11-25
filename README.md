@@ -6,6 +6,16 @@ In the project directory, you can run:
 
 ### `npm start`
 
+Runs the app and the server both together.<br>
+Equals to running `$npm run server` and `$npm run client`.
+
+### `npm run server`
+
+Runs the server in the development mode.<br>
+Send requests to [http://localhost:3001](http://localhost:3001) to view it.
+
+### `npm run client`
+
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
