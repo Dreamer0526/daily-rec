@@ -12,10 +12,6 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-app.get('/', (req, res) => {
-    res.end("HI");
-});
-
 const _services = require('./services/_services');
 _services(app);
 

@@ -8,7 +8,7 @@ class Header extends Component {
     return (
       <div id="app-header">
         <Row className="align-items-center">
-          <Col xs="4">
+          <Col xs={{ size: 3, offset: 1 }}>
             <img id="app-logo" src={logoUrl} alt="logo" />
           </Col>
           <Col xs={{ size: 2, offset: 6 }}>

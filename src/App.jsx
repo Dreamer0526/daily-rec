@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Col } from "reactstrap";
 
 import Header from "./components/Header";
 import Home from "./pages/Home";
-import About from "./pages/About";
-import Details from "./pages/Details";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 class App extends Component {
   render() {
@@ -17,15 +18,17 @@ class App extends Component {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/login">login</Link>
             </li>
             <li>
-              <Link to="/details">Details</Link>
+              <Link to="/register">login</Link>
             </li>
           </ul>
-          <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/details" component={Details} />
+          <Col xs={12} md={{ size: 8, offset: 2 }} lg={{ size: 6, offset: 3 }}>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+          </Col>
         </div>
       </BrowserRouter>
     );

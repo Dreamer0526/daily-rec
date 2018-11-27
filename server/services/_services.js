@@ -1,6 +1,6 @@
 const services = [
   require('./personalServices'),
-  require('./gradeServices')
+  require('./authServices')
 ]
 
 module.exports = (app) => {
