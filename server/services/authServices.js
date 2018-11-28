@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const crypto = require("crypto");
 
 const authSchema = new mongoose.Schema({
-  userName: {
+  username: {
     type: String,
     unique: true
   },
@@ -11,9 +11,9 @@ const authSchema = new mongoose.Schema({
 
 const Auth = mongoose.model("auth", authSchema);
 
-register = (req, res) => {
+function register(req, res) {
   const {
-    userName,
+    username,
     password
   } = req.body;
 
@@ -21,7 +21,7 @@ register = (req, res) => {
   const secretPwd = md5.update(password).digest("hex");
 
   const newDoc = new Auth({
-    userName,
+    username,
     password: secretPwd
   });
 
@@ -35,16 +35,16 @@ register = (req, res) => {
 
     res.sendStatus(200);
   });
-};
+}
 
-login = (req, res) => {
+function login(req, res) {
   const {
-    userName,
+    username,
     password
   } = req.body;
 
   Auth.findOne({
-      userName
+      username
     },
     (err, doc) => {
       if (err) throw err;
@@ -65,7 +65,7 @@ login = (req, res) => {
       res.sendStatus(200);
     }
   );
-};
+}
 
 module.exports = app => {
   app.post("/auth/register", (req, res) => register(req, res));

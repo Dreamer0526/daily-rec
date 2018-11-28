@@ -9,7 +9,7 @@ const Personal = mongoose.model('personal', personalSchema);
 
 module.exports = (app) => {
   app.post('/name', (req, res) => {
-    item = new Personal(req.body).save().then(() => {
+    new Personal(req.body).save().then(() => {
       res.send("Saved");
     })
   })
