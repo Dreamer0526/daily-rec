@@ -1,0 +1,1 @@
+export const baseApiPath = "http://localhost:3001";

@@ -11,7 +11,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div class="container-fluid">
+        <div className="container-fluid">
           <Header />
           <ul>
             <li>
@@ -21,7 +21,7 @@ class App extends Component {
               <Link to="/login">login</Link>
             </li>
             <li>
-              <Link to="/register">login</Link>
+              <Link to="/register">register</Link>
             </li>
           </ul>
           <Col xs={12} md={{ size: 8, offset: 2 }} lg={{ size: 6, offset: 3 }}>
