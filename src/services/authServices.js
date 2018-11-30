@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as authApiPaths from "../paths/authApiPaths";
+import * as authApiPaths from "./paths/authApiPaths";
 
 /**
  * @method register
