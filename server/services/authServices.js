@@ -26,14 +26,17 @@ function register(req, res) {
   });
 
   newDoc.save(err => {
-    if (err && err.code === 11000) {
-      res.status(400).send("User name is used");
-      return;
+    if (err) {
+      if (err.code === 11000) {
+        res.status(400).send("User name is used");
+  
+      } else {
+        res.status(400).send("Unknown error: " + err);
+      }
+      
     } else {
-      res.status(400).send("Unknown error: " + err);
+      res.sendStatus(200);
     }
-
-    res.sendStatus(200);
   });
 }
 

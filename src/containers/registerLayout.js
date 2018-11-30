@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Register from "../components/Register";
-import { submitRegisterFrom } from "../actions/registerActions";
+import { sendRegisterRequest } from "../actions/registerActions";
 
 const mapStateToProps = (state) => {
   return {
@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmit: (action) => dispatch(submitRegisterFrom(action))
+    onSubmit: (payload) => dispatch(sendRegisterRequest(payload))
   }
 }
 

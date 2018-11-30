@@ -1,12 +1,12 @@
 import axios from "axios";
-import * as authApiPaths from "./paths/authApiPaths";
+import { pathToRegister } from "./paths/authApiPaths";
 
 /**
  * @method register
- * @param {Object} form Registration form, with keys [username, password] 
+ * @param {Object} form {username: String, password: String}
  * @return {Promise} 
  */
-export const register = (form) => {
-  const url = authApiPaths.pathToRegister;
+export function register(form) {
+  const url = pathToRegister;
   return axios.post(url, form);
 }
