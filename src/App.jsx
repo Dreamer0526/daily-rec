@@ -9,10 +9,10 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import reducers from "./reducers";
 
 import Header from "./components/Header";
+import loginView from "./views/loginView";
 import registerView from "./views/registerView";
 
 import Home from "./layouts/Home";
-import Login from "./layouts/Login";
 
 const middlewares = [thunkMiddleware];
 
@@ -25,11 +25,11 @@ const App = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <div className="container-fluid">
+        <div>
           <Header />
           <Col xs={12} md={{ size: 8, offset: 2 }} lg={{ size: 6, offset: 3 }}>
             <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
+            <Route path="/login" component={loginView} />
             <Route path="/register" component={registerView} />
           </Col>
         </div>

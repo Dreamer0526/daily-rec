@@ -8,7 +8,7 @@ class Header extends Component {
   render() {
     return (
       <div id="app-header">
-        <Row className="half-margin-top align-items-center">
+        <Row className="align-items-center">
           <Col xs={{ size: 3, offset: 1 }}>
             <Row className="align-items-center">
               <img id="app-logo" src={logoUrl} alt="logo" />
@@ -22,7 +22,6 @@ class Header extends Component {
             <Link type="register" />
           </Col>
         </Row>
-        <hr />
       </div>
     );
   }
