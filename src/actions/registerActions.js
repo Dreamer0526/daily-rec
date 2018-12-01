@@ -3,16 +3,22 @@ import {
 } from "../services/authServices";
 
 /**
- * @method submitRegisterFrom
+ * @method updatePristine
+ * @param {String} name Field name to update
+ */
+export const updatePristine = name => ({
+  type: "update_field_pristine",
+  name
+})
+
+/**
+ * @method validateRegisterFrom
  * @param {Object} payload {username: String, password: String}
  */
-
-export const submitRegisterFrom = payload => {
-  return {
-    type: "submit_register_form",
-    payload
-  };
-};
+export const validateRegisterFrom = payload => ({
+  type: "validate_register_form",
+  payload
+});
 
 /**
  * @method sendRegisterRequest
@@ -20,8 +26,6 @@ export const submitRegisterFrom = payload => {
  */
 export function sendRegisterRequest(payload) {
   return async dispatch => {
-    dispatch(submitRegisterFrom(payload));
-
     try {
       await register(payload);
       return dispatch({

@@ -1,19 +1,24 @@
 import {
   connect
 } from "react-redux";
-
 import Register from "../components/Register";
 import {
-  sendRegisterRequest
+  updatePristine,
+  sendRegisterRequest,
+  validateRegisterFrom
 } from "../actions/registerActions";
 
 const mapStateToProps = state => ({
-  alert: state.register.alert
-})
+  alert: state.register.alert,
+  desc: state.register.fields.desc,
+  valid: state.register.valid
+});
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (payload) => dispatch(sendRegisterRequest(payload))
+    onFocus: name => dispatch(updatePristine(name)),
+    onClickSubmit: payload => dispatch(validateRegisterFrom(payload)),
+    submit: payload => dispatch(sendRegisterRequest(payload))
   }
 }
 
