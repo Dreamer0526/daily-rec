@@ -25,7 +25,15 @@ export const validateRegisterFrom = payload => ({
  * @param {Object} payload {username: String, password: String}
  */
 export function sendRegisterRequest(payload) {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    dispatch(validateRegisterFrom(payload));
+
+    const {
+      valid = false
+    } = getState().register;
+
+    if (!valid) return;
+
     try {
       await register(payload);
       return dispatch({

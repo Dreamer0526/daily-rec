@@ -17,9 +17,9 @@ class Header extends Component {
               </span>
             </Row>
           </Col>
-          <Col xs={{ size: 2, offset: 6 }}>
-            <Link type="login" />
-            <Link type="register" />
+          <Col xs={{ size: 3, offset: 5 }}>
+            <Link name="login" color="info" />
+            <Link name="register" color="warning" />
           </Col>
         </Row>
       </div>

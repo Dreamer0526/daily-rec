@@ -1,22 +1,11 @@
+import registerFields from "../fields/registerFields";
+
 const origin = {
   alert: {
     type: "",
     desc: ""
   },
-  fields: {
-    desc: {
-      username: "",
-      password: ""
-    },
-    pristine: {
-      username: true,
-      password: true
-    },
-    value: {
-      username: "",
-      password: ""
-    }
-  },
+  fields: registerFields,
   valid: false
 };
 
@@ -24,9 +13,9 @@ const updatePristine = (state, name) => ({
   ...state,
   fields: {
     ...state.fields,
-    pristine: {
-      ...state.fields.pristine,
-      [name]: false
+    [name]: {
+      ...state.fields[name],
+      pristine: false
     }
   }
 })
@@ -43,24 +32,26 @@ const updateFormValue = (state, payload) => {
 
   const modified = {
     ...fields,
-    value: {
-      ...fields.value,
-      username,
-      password
+    username: {
+      ...fields.username,
+      value: username,
+      desc: username ? "" : "This is a required field"
     },
-    desc: {
-      ...fields.desc,
-      username: username ? "" : "This is a required field",
-      password: password ? "" : "This is a required field"
+    password: {
+      ...fields.password,
+      value: password,
+      desc: password ? "" : "This is a required field"
     }
   };
 
-  const {
-    pristine,
-    value,
-    desc
-  } = modified;
-  const valid = Object.keys(payload).every(name => !pristine[name] && value[name] && !desc[name])
+  const valid = Object.keys(payload).every(name => {
+    const {
+      pristine,
+      value,
+      desc
+    } = modified[name];
+    return !pristine && value && !desc;
+  })
 
   return {
     ...state,
@@ -86,7 +77,7 @@ const reducer = (state = origin, action) => {
       return {
         ...state,
         alert: {
-          desc: "Register sucess",
+          desc: "Register success!",
           type: "success"
         },
         valid: false

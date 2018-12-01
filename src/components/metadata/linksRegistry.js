@@ -1,15 +1,15 @@
 export const linksRegistry = [{
-    type: "register",
+    name: "register",
     path: "/register",
     label: "Sign Up"
   },
   {
-    type: "login",
+    name: "login",
     path: "/login",
     label: "Sign In"
   }
 ];
 
-export function findLinkConfig(type) {
-  return linksRegistry.find(config => config.type === type) || {};
+export function findLinkConfig(name) {
+  return linksRegistry.find(config => config.name === name) || {};
 }

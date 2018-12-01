@@ -1,25 +1,31 @@
 import React, { Component } from "react";
-import { Form, Input, Button, Fade, Row, Alert } from "reactstrap";
+import { Form, Input, Button, Fade, Row, Col, Alert } from "reactstrap";
+
+import Link from "../components/Link";
 
 class Register extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      username: "",
-      password: ""
-    };
+    this.state = { form: this.getState() };
 
     this.handleOnFocus = this.handleOnFocus.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
-  componentDidUpdate() {
-    if (this.props.valid) {
-      const { username, password } = this.state;
-      this.props.submit({ username, password });
+  getState() {
+    const form = {};
+
+    for (const fieldName in this.props.fields) {
+      Object.defineProperty(form, fieldName, {
+        value: null,
+        enumerable: true,
+        writable: true
+      });
     }
+
+    return form;
   }
 
   handleOnFocus(event) {
@@ -28,61 +34,62 @@ class Register extends Component {
 
   handleOnChange(event) {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    const { form } = this.state;
+    this.setState({
+      form: {
+        ...form,
+        [name]: value
+      }
+    });
   }
 
   handleOnSubmit() {
-    const { username, password } = this.state;
-    this.props.onClickSubmit({ username, password });
+    this.props.validateForm(this.state.form);
+  }
+
+  renderField(name) {
+    const field = this.props.fields[name];
+
+    return (
+      <Row className="half-margin-bottom">
+        <Input
+          {...field}
+          name={name}
+          value={this.state.form[name]}
+          onFocus={this.handleOnFocus}
+          onChange={this.handleOnChange}
+        />
+        <Fade in={field.desc} tag={"span"} className="field-description">
+          {field.desc}
+        </Fade>
+      </Row>
+    );
   }
 
   render() {
-    const { username, password } = this.state;
-    const { alert = {}, desc } = this.props;
+    const { alert = {}, fields } = this.props;
+    const fieldsList = Object.keys(fields);
 
     return (
       <Form id="form-register">
         {alert.desc && (
           <Alert color={alert.type}>
             {alert.desc}
-            {alert.type === "success" && (
-              <Button
-                color="link"
-                onClick={() => this.props.history.push("/login")}
-              >
-                Sign In
-              </Button>
-            )}
+            {alert.type === "success" && <Link name="login" />}
           </Alert>
         )}
-        <Row className="half-margin-bottom">
-          <Input
-            name="username"
-            placeholder="User Name"
-            value={username}
-            onFocus={this.handleOnFocus}
-            onChange={this.handleOnChange}
-          />
-          <Fade in={desc.username} tag={"span"} className="field-description">
-            {desc.username}
-          </Fade>
-        </Row>
-        <Row className="half-margin-bottom">
-          <Input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onFocus={this.handleOnFocus}
-            onChange={this.handleOnChange}
-          />
-          <Fade in={desc.password} tag={"span"} className="field-description">
-            {desc.password}
-          </Fade>
-        </Row>
-        <Button outline color="primary" onClick={this.handleOnSubmit}>
-          Register
-        </Button>
+
+        <Col
+          className="text-center"
+          xs={{ size: 12 }}
+          md={{ size: 10, offset: 1 }}
+          lg={{ size: 8, offset: 2 }}
+        >
+          {fieldsList.map(name => this.renderField(name))}
+          <Button color="primary" onClick={this.handleOnSubmit}>
+            Register
+          </Button>
+        </Col>
       </Form>
     );
   }
