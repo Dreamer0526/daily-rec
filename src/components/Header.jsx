@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Row, Col, Button } from "reactstrap";
-import { withRouter } from "react-router-dom";
+import { Row, Col } from "reactstrap";
+import Link from "./Link";
 
 import logoUrl from "../static/images/logo.png";
 
@@ -14,12 +14,8 @@ class Header extends Component {
             <span>Daily Rec</span>
           </Col>
           <Col xs={{ size: 2, offset: 6 }}>
-            <Button onClick={() => this.props.history.push("/register")}>
-              Sign Up
-            </Button>
-            <Button onClick={() => this.props.history.push("/login")}>
-              Sign In
-            </Button>
+            <Link type="login" />
+            <Link type="register" />
           </Col>
         </Row>
         <hr />
@@ -28,4 +24,4 @@ class Header extends Component {
   }
 }
 
-export default withRouter(Header);
+export default Header;

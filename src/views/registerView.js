@@ -1,7 +1,7 @@
 import {
   connect
 } from "react-redux";
-import Register from "../components/Register";
+import Register from "../layouts/Register";
 import {
   updatePristine,
   sendRegisterRequest,
