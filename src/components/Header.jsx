@@ -8,10 +8,14 @@ class Header extends Component {
   render() {
     return (
       <div id="app-header">
-        <Row className="align-items-center">
+        <Row className="half-margin-top align-items-center">
           <Col xs={{ size: 3, offset: 1 }}>
-            <img id="app-logo" src={logoUrl} alt="logo" />
-            <span>Daily Rec</span>
+            <Row className="align-items-center">
+              <img id="app-logo" src={logoUrl} alt="logo" />
+              <span id="app-name" className="half-padding-left">
+                Daily React
+              </span>
+            </Row>
           </Col>
           <Col xs={{ size: 2, offset: 6 }}>
             <Link type="login" />

@@ -63,7 +63,7 @@ class Register extends Component {
             onFocus={this.handleOnFocus}
             onChange={this.handleOnChange}
           />
-          <Fade in={desc.username} tag={"span"}>
+          <Fade in={desc.username} tag={"span"} className="field-description">
             {desc.username}
           </Fade>
         </Row>
@@ -76,16 +76,11 @@ class Register extends Component {
             onFocus={this.handleOnFocus}
             onChange={this.handleOnChange}
           />
-          <Fade in={desc.password} tag={"span"}>
+          <Fade in={desc.password} tag={"span"} className="field-description">
             {desc.password}
           </Fade>
         </Row>
-        <Button
-          outline
-          color="primary"
-          disabled={false}
-          onClick={this.handleOnSubmit}
-        >
+        <Button outline color="primary" onClick={this.handleOnSubmit}>
           Register
         </Button>
       </Form>
