@@ -3,6 +3,7 @@ import {
 } from "react-redux";
 import Register from "../layouts/Register";
 import {
+  clearAlert,
   updatePristine,
   sendRegisterRequest,
 } from "../actions/registerActions";
@@ -16,7 +17,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     onFocus: name => dispatch(updatePristine(name)),
-    validateForm: payload => dispatch(sendRegisterRequest(payload))
+    onSubmit: payload => dispatch(sendRegisterRequest(payload)),
+    onClearAlert: () => dispatch(clearAlert())
   }
 }
 

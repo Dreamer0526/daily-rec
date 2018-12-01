@@ -1,83 +1,32 @@
-import React, { Component } from "react";
-import { Form, Input, Button, Fade, Row, Col, Alert } from "reactstrap";
+import React from "react";
+import { Form, Col, Alert } from "reactstrap";
+import FormManager from "../components/FormManager";
 
 import Link from "../components/Link";
 
-class Register extends Component {
+class Register extends FormManager {
   constructor(props) {
     super(props);
 
-    this.state = { form: this.getState() };
-
-    this.handleOnFocus = this.handleOnFocus.bind(this);
-    this.handleOnSubmit = this.handleOnSubmit.bind(this);
-    this.handleOnChange = this.handleOnChange.bind(this);
+    this.state = { form: this.getStateFromProps() };
   }
 
-  getState() {
-    const form = {};
-
-    for (const fieldName in this.props.fields) {
-      Object.defineProperty(form, fieldName, {
-        value: null,
-        enumerable: true,
-        writable: true
-      });
-    }
-
-    return form;
-  }
-
-  handleOnFocus(event) {
-    this.props.onFocus(event.target.name);
-  }
-
-  handleOnChange(event) {
-    const { name, value } = event.target;
-    const { form } = this.state;
-    this.setState({
-      form: {
-        ...form,
-        [name]: value
-      }
-    });
-  }
-
-  handleOnSubmit() {
-    this.props.validateForm(this.state.form);
-  }
-
-  renderField(name) {
-    const field = this.props.fields[name];
+  renderAlert() {
+    const { desc, type } = this.props.alert;
+    const showAlert = !!desc;
 
     return (
-      <Row className="half-margin-bottom">
-        <Input
-          {...field}
-          name={name}
-          value={this.state.form[name]}
-          onFocus={this.handleOnFocus}
-          onChange={this.handleOnChange}
-        />
-        <Fade in={field.desc} tag={"span"} className="field-description">
-          {field.desc}
-        </Fade>
-      </Row>
+      <Alert color={type} isOpen={showAlert} toggle={this.handleClearAlert}>
+        {desc}
+        {type === "success" && <Link name="login" />}
+      </Alert>
     );
   }
 
   render() {
-    const { alert = {}, fields } = this.props;
-    const fieldsList = Object.keys(fields);
-
     return (
       <Form id="form-register">
-        {alert.desc && (
-          <Alert color={alert.type}>
-            {alert.desc}
-            {alert.type === "success" && <Link name="login" />}
-          </Alert>
-        )}
+        {this.renderAlert()}
 
         <Col
           className="text-center"
@@ -85,10 +34,8 @@ class Register extends Component {
           md={{ size: 10, offset: 1 }}
           lg={{ size: 8, offset: 2 }}
         >
-          {fieldsList.map(name => this.renderField(name))}
-          <Button color="primary" onClick={this.handleOnSubmit}>
-            Register
-          </Button>
+          {this.renderFields()}
+          {this.renderSubmit({ label: "Register" })}
         </Col>
       </Form>
     );

@@ -44,7 +44,7 @@ const updateFormValue = (state, payload) => {
     }
   };
 
-  const valid = Object.keys(payload).every(name => {
+  const valid = Object.keys(state.fields).every(name => {
     const {
       pristine,
       value,
@@ -69,6 +69,12 @@ const reducer = (state = origin, action) => {
   switch (type) {
     case "update_field_pristine":
       return updatePristine(state, action.name);
+
+    case "clear_alert":
+      return {
+        ...state,
+        alert: {}
+      };
 
     case "validate_register_form":
       return updateFormValue(state, action.payload);

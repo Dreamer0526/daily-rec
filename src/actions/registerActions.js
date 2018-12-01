@@ -9,7 +9,11 @@ import {
 export const updatePristine = name => ({
   type: "update_field_pristine",
   name
-})
+});
+
+export const clearAlert = () => ({
+  type: "clear_alert"
+});
 
 /**
  * @method validateRegisterFrom

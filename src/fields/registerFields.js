@@ -1,19 +1,19 @@
 const desc = "";
 const value = "";
-const prinstine = false;
+const pristine = false;
 
 const registerFields = {
   username: {
     value,
     desc,
-    prinstine,
+    pristine,
     type: "text",
     placeholder: "User Name",
   },
   password: {
     value,
     desc,
-    prinstine,
+    pristine,
     type: "password",
     placeholder: "Password",
   }
