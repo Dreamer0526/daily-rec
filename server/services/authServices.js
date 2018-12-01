@@ -29,11 +29,11 @@ function register(req, res) {
     if (err) {
       if (err.code === 11000) {
         res.status(400).send("User name is used");
-  
+
       } else {
         res.status(400).send("Unknown error: " + err);
       }
-      
+
     } else {
       res.sendStatus(200);
     }

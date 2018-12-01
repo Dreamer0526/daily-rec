@@ -1,16 +1,17 @@
-import { connect } from "react-redux";
+import {
+  connect
+} from "react-redux";
+
 import Register from "../components/Register";
-import { sendRegisterRequest } from "../actions/registerActions";
+import {
+  sendRegisterRequest
+} from "../actions/registerActions";
 
-const mapStateToProps = (state) => {
-  return {
-    alerts: state.alerts,
-    username: state.username,
-    password: state.password
-  }
-}
+const mapStateToProps = state => ({
+  alert: state.register.alert
+})
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     onSubmit: (payload) => dispatch(sendRegisterRequest(payload))
   }

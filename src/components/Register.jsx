@@ -4,11 +4,11 @@ import { Form, Input, Button, Fade, Row, Alert } from "reactstrap";
 class Register extends Component {
   constructor() {
     super();
-    
+
     this.state = {
       username: "",
       password: ""
-    }
+    };
 
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -16,7 +16,7 @@ class Register extends Component {
 
   handleOnChange(event) {
     const { name, value } = event.target;
-    this.setState({ [name]:  value });
+    this.setState({ [name]: value });
   }
 
   handleOnSubmit() {
@@ -31,15 +31,16 @@ class Register extends Component {
 
   render() {
     const { username, password } = this.state;
+    const { alert } = this.props;
 
     return (
       <Form id="form-register">
-        <Alert color="warning"> alert from server </Alert>
+        {alert && <Alert color="warning"> {alert} </Alert>}
         <Row className="half-margin-bottom">
-          <Input 
-            name="username" 
-            placeholder="User Name" 
-            value={username} 
+          <Input
+            name="username"
+            placeholder="User Name"
+            value={username}
             onChange={this.handleOnChange}
           />
           <Fade in={true} tag={"span"}>
@@ -47,12 +48,13 @@ class Register extends Component {
           </Fade>
         </Row>
         <Row className="half-margin-bottom">
-          <Input 
-            name="password" 
-            type="password" 
+          <Input
+            name="password"
+            type="password"
             placeholder="Password"
             value={password}
-            onChange={this.handleOnChange} />
+            onChange={this.handleOnChange}
+          />
           <Fade in={true} tag={"span"}>
             password desc
           </Fade>

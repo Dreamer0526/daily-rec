@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import thunkMiddleware from "redux-thunk";
 import { createStore, applyMiddleware } from "redux";
 import { BrowserRouter, Route } from "react-router-dom";
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from "redux-devtools-extension";
 
 import reducers from "./reducers";
 
@@ -14,10 +14,10 @@ import Login from "./components/Login";
 
 import registerLayout from "./containers/registerLayout";
 
-const middlewares = [ thunkMiddleware ];
+const middlewares = [thunkMiddleware];
 
 const store = createStore(
-  reducers, 
+  reducers,
   composeWithDevTools(applyMiddleware(...middlewares))
 );
 
@@ -27,11 +27,7 @@ const App = () => {
       <BrowserRouter>
         <div className="container-fluid">
           <Header />
-          <Col
-            xs={12}
-            md={{ size: 8, offset: 2 }}
-            lg={{ size: 6, offset: 3 }}
-          >
+          <Col xs={12} md={{ size: 8, offset: 2 }} lg={{ size: 6, offset: 3 }}>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={registerLayout} />
@@ -39,7 +35,7 @@ const App = () => {
         </div>
       </BrowserRouter>
     </Provider>
-  )
-}
+  );
+};
 
 export default App;

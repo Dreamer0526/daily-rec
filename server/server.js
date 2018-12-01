@@ -20,8 +20,8 @@ app.use("*", (req, res, next) => {
 
 app.use(bodyParser.json());
 
-const _services = require('./services/_services');
-_services(app);
+const runServices = require('./services');
+runServices(app);
 
 app.listen(3001, () => {
     console.log('Server starts listening to port 3001...');

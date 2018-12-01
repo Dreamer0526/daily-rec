@@ -1,5 +1,5 @@
 const origin = {
-  alerts: [],
+  alert: "",
   username: {
     value: "",
     validation: ""
@@ -11,11 +11,16 @@ const origin = {
 };
 
 const reducer = (state = origin, action) => {
-  const { type = "", payload = {} } = action;
-  const { username, password } = payload;
+  const {
+    type = "", payload = {}
+  } = action;
+  const {
+    username,
+    password
+  } = payload;
 
-  switch(type) {
-    case "submit_register_form": 
+  switch (type) {
+    case "submit_register_form":
       return {
         ...state,
         username: {
@@ -27,9 +32,15 @@ const reducer = (state = origin, action) => {
           value: password
         }
       }
-    
-      default:
-        return state;
+
+    case "register_error":
+      return {
+        ...state,
+        alert: "User name is used"
+      }
+
+    default:
+      return state;
   }
 }
 
