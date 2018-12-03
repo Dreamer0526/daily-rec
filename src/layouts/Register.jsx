@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Col, Alert } from "reactstrap";
-import FormManager from "../components/FormManager";
+
+import FormManager from "../templates/formManager/FormManager";
 
 import Link from "../components/Link";
 

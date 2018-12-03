@@ -1,25 +1,25 @@
 import {
   connect
 } from "react-redux";
-import Register from "../layouts/Register";
 import {
-  clearAlert,
-  updatePristine,
-  sendRegisterRequest,
-} from "../actions/registerActions";
+  register
+} from "../services/authServices";
+import { 
+  map_state_to_props, 
+  map_dispatch_to_props 
+} from "../templates/formManager/formManagerViewMethods";
 
-const mapStateToProps = state => ({
-  alert: state.register.alert,
-  fields: state.register.fields,
-  valid: state.register.valid
-});
+import registerFields from "../fields/registerFields";
+import Register from "../layouts/Register";
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onFocus: name => dispatch(updatePristine(name)),
-    onSubmit: payload => dispatch(sendRegisterRequest(payload)),
-    onClearAlert: () => dispatch(clearAlert())
-  }
+const SUB_STATE = "register";
+
+const mapStateToProps = (state) => {
+  return map_state_to_props(state, SUB_STATE);
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return map_dispatch_to_props(dispatch, SUB_STATE, registerFields, register);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

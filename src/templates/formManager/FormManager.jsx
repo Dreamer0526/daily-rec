@@ -5,6 +5,8 @@ class FormManager extends Component {
   constructor(props) {
     super(props);
 
+    this.props.initFields();
+
     this.handleOnFocus = this.handleOnFocus.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
