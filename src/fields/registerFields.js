@@ -1,6 +1,6 @@
 const desc = "";
 const value = "";
-const pristine = false;
+const pristine = true;
 
 const registerFields = {
   username: {

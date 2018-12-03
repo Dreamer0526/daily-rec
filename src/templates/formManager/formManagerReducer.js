@@ -22,18 +22,17 @@ const updateFormValue = (state, payload) => {
   const {
     fields
   } = state;
-  const fieldsList = Object.keys(payload);
 
-  let modified = {...fields};
+  let modified = fields;
 
-  fieldsList.forEach(fieldName => {
+  Object.keys(fields).forEach(fieldName => {
     const originField = fields[fieldName];
     const value = payload[fieldName];
 
     modified[fieldName] = {
       ...originField,
       value,
-      desc: value? "" : "This is a required field" 
+      desc: value ? "" : "This is a required field"
     }
   })
 

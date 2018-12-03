@@ -4,22 +4,26 @@ import {
 import {
   register
 } from "../services/authServices";
-import { 
-  map_state_to_props, 
-  map_dispatch_to_props 
+import {
+  stateBasedProps,
+  dispatchBasedProps
 } from "../templates/formManager/formManagerViewMethods";
 
 import registerFields from "../fields/registerFields";
 import Register from "../layouts/Register";
 
-const SUB_STATE = "register";
+const formSetup = {
+  subStateName: "register",
+  formFields: registerFields,
+  submitService: register
+};
 
-const mapStateToProps = (state) => {
-  return map_state_to_props(state, SUB_STATE);
-}
+const mapStateToProps = state => ({
+  ...stateBasedProps(state, formSetup)
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return map_dispatch_to_props(dispatch, SUB_STATE, registerFields, register);
-}
+const mapDispatchToProps = dispatch => ({
+  ...dispatchBasedProps(dispatch, formSetup)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

@@ -1,7 +1,8 @@
 /**
  * @method init_fields
  * @param {Object} fields
- */export const init_fields = fields => ({
+ */
+export const init_fields = fields => ({
   type: "init_fields",
   fields
 });
@@ -9,7 +10,8 @@
 /**
  * @method update_pristine
  * @param {String} name Field name to update
- */export const update_pristine = name => ({
+ */
+export const update_pristine = name => ({
   type: "update_pristine",
   name
 });
