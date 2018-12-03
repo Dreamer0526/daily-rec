@@ -1,22 +1,13 @@
-const desc = "";
-const value = "";
-const pristine = true;
+import {
+  username
+} from "./base/names";
+import {
+  password
+} from "./base/passwords";
 
-const registerFields = {
-  username: {
-    value,
-    desc,
-    pristine,
-    type: "text",
-    placeholder: "User Name",
-  },
-  password: {
-    value,
-    desc,
-    pristine,
-    type: "password",
-    placeholder: "Password",
-  }
+const loginFields = {
+  username,
+  password
 };
 
-export default registerFields;
+export default loginFields;
