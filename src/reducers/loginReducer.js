@@ -1,28 +1,10 @@
-const origin = {
-  alert: {
-    type: "",
-    desc: ""
-  },
-  fields: {
-    desc: {
-      username: "",
-      password: ""
-    },
-    pristine: {
-      username: true,
-      password: true
-    },
-    value: {
-      username: "",
-      password: ""
-    }
-  },
-  valid: false
-};
+import {
+  combineReducers
+} from "redux";
+import formManagerReducer from "../templates/formManager/formManagerReducer";
 
+const loginReducer = combineReducers({
+  form: formManagerReducer
+});
 
-const reducer = (state = origin, action) => {
-  return state;
-}
-
-export default reducer;
+export default loginReducer;

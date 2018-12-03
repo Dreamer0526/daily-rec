@@ -5,26 +5,16 @@ class FormManager extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      form: {}
+    };
+
     this.props.initFields();
 
     this.handleOnFocus = this.handleOnFocus.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleClearAlert = this.handleClearAlert.bind(this);
-  }
-
-  getStateFromProps() {
-    const form = {};
-
-    for (const fieldName in this.props.fields) {
-      Object.defineProperty(form, fieldName, {
-        value: null,
-        enumerable: true,
-        writable: true
-      });
-    }
-
-    return form;
   }
 
   handleOnFocus(event) {

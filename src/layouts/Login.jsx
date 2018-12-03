@@ -1,45 +1,26 @@
-import React, { Component } from "react";
-import { Form, Input, Button, Fade, Row, Alert } from "reactstrap";
+import React from "react";
+import { Form, Col } from "reactstrap";
 
-class Login extends Component {
+import FormManager from "../templates/formManager/FormManager";
+
+class Register extends FormManager {
   render() {
     return (
       <Form id="form-register">
-        <Row className="half-margin-bottom">
-          <Input
-            name="username"
-            placeholder="User Name"
-            // value={username}
-            onFocus={this.handleOnFocus}
-            onChange={this.handleOnChange}
-          />
-          {/* <Fade in={desc.username} tag={"span"}>
-            {desc.username}
-          </Fade> */}
-        </Row>
-        <Row className="half-margin-bottom">
-          <Input
-            name="password"
-            type="password"
-            placeholder="Password"
-            // value={password}
-            onFocus={this.handleOnFocus}
-            onChange={this.handleOnChange}
-          />
-          {/* <Fade in={desc.password} tag={"span"}>
-            {desc.password}
-          </Fade> */}
-        </Row>
-        <Button
-          outline
-          color="primary"
-          // onClick={this.handleOnSubmit}
+        {this.renderAlert()}
+
+        <Col
+          className="text-center"
+          xs={{ size: 12 }}
+          md={{ size: 10, offset: 1 }}
+          lg={{ size: 8, offset: 2 }}
         >
-          Login
-        </Button>
+          {this.renderFields()}
+          {this.renderSubmit({ label: "Login" })}
+        </Col>
       </Form>
     );
   }
 }
 
-export default Login;
+export default Register;
