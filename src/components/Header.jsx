@@ -1,17 +1,33 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { Row, Col } from "reactstrap";
 import Link from "./Link";
 
 import logoUrl from "../static/images/logo.png";
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+
+    this.goToHomePage = this.goToHomePage.bind(this);
+  }
+
+  goToHomePage() {
+    this.props.history.push("/");
+  }
+
   render() {
     return (
       <div id="app-header">
         <Row className="align-items-center">
           <Col xs={{ size: 3, offset: 1 }}>
             <Row className="align-items-center">
-              <img id="app-logo" src={logoUrl} alt="logo" />
+              <img
+                id="app-logo"
+                src={logoUrl}
+                alt="logo"
+                onClick={this.goToHomePage}
+              />
               <span id="app-name" className="half-padding-left">
                 Daily React
               </span>
@@ -27,4 +43,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);
