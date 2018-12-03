@@ -4,6 +4,10 @@ import { Form, Col } from "reactstrap";
 import FormManager from "../templates/formManager/FormManager";
 
 class Register extends FormManager {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <Form id="form-register">

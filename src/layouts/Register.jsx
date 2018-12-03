@@ -6,6 +6,10 @@ import FormManager from "../templates/formManager/FormManager";
 import Link from "../components/Link";
 
 class Register extends FormManager {
+  constructor(props) {
+    super(props);
+  }
+
   renderAlert() {
     const { desc, type } = this.props.alert;
     const showAlert = !!desc;

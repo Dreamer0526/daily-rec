@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
-  pathToRegister
+  pathToRegister,
+  pathToLogin
 } from "./paths/authApiPaths";
 
 /**
@@ -10,5 +11,10 @@ import {
  */
 export function register(form) {
   const url = pathToRegister;
+  return axios.post(url, form);
+}
+
+export function login(form) {
+  const url = pathToLogin;
   return axios.post(url, form);
 }

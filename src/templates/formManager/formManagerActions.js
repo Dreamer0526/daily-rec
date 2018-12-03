@@ -44,9 +44,10 @@ export function send_submit_request(subState, submitRequest, payload) {
     if (!valid) return;
 
     try {
-      await submitRequest(payload);
+      const response = await submitRequest(payload);
       return dispatch({
-        type: "submit_success"
+        type: "submit_response",
+        response: response.data
       });
 
     } catch (error) {

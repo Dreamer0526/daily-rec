@@ -73,12 +73,12 @@ const reducer = (state = origin, action) => {
     case "validate_register_form":
       return updateFormValue(state, action.payload);
 
-    case "submit_success":
+    case "submit_response":
       return {
         ...state,
         alert: {
-          desc: "Register success!",
-          type: "success"
+          desc: action.response.message,
+          type: action.response.type
         },
         valid: false
       };
@@ -87,8 +87,8 @@ const reducer = (state = origin, action) => {
       return {
         ...state,
         alert: {
-          desc: "User name is used",
-          type: "warning"
+          desc: "Unknow error occurred",
+          type: "danger"
         },
         valid: false
       };

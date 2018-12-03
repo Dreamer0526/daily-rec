@@ -28,14 +28,20 @@ function register(req, res) {
   newDoc.save(err => {
     if (err) {
       if (err.code === 11000) {
-        res.status(400).send("User name is used");
+        res.json({
+          type: "warning",
+          message: "User name is used"
+        });
 
       } else {
         res.status(400).send("Unknown error: " + err);
       }
 
     } else {
-      res.sendStatus(200);
+      res.json({
+        type: "success",
+        message: "Register success！"
+      });
     }
   });
 }
@@ -50,10 +56,16 @@ function login(req, res) {
       username
     },
     (err, doc) => {
-      if (err) throw err;
+      if (err) {
+        res.status(400).send("Unknown error: " + err);
+        return
+      }
 
       if (!doc) {
-        res.status(400).send("User does not exit");
+        res.json({
+          type: "warning",
+          message: "User does not exit"
+        });
         return;
       }
 
@@ -61,11 +73,19 @@ function login(req, res) {
       const secretPwd = md5.update(password).digest("hex");
 
       if (secretPwd !== doc.password) {
-        res.status(400).send("Wrong password");
+        res.json({
+          type: "warning",
+          message: "Wrong Password"
+        });
+
         return;
       }
 
-      res.sendStatus(200);
+      res.json({
+        type: "success",
+        message: "Login success"
+      });
+
     }
   );
 }

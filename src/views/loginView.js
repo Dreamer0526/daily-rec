@@ -2,7 +2,7 @@ import {
   connect
 } from "react-redux";
 import {
-  register
+  login
 } from "../services/authServices";
 import {
   stateBasedProps,
@@ -15,7 +15,7 @@ import Login from "../layouts/Login";
 const formSetup = {
   subStateName: "login",
   formFields: loginFields,
-  submitService: register
+  submitService: login
 };
 
 const mapStateToProps = state => ({
