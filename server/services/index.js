@@ -4,7 +4,7 @@ const config = require("../config");
 const apiRouter = require('./apiServices');
 const authRouter = require('./authServices');
 
-function authProtectMiddleware(req, res, next) {
+function authProtectedMiddleware(req, res, next) {
   const authorization = req.headers['authorization'];
 
   if (!authorization) {
@@ -23,8 +23,8 @@ function authProtectMiddleware(req, res, next) {
 }
 
 module.exports = (app) => {
-  app.use('/api', apiRouter);
-  app.use('/api', authProtectMiddleware);
+  app.use('/api', authProtectedMiddleware);
 
+  app.use('/api', apiRouter);
   app.use('/auth', authRouter);
 }
