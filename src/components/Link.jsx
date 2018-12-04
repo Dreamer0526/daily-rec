@@ -9,17 +9,27 @@ class Link extends Component {
     super(props);
 
     this.config = findLinkConfig(this.props.name);
+
+    this.handleOnClick = this.handleOnClick.bind(this);
+  }
+
+  handleOnClick() {
+    const { onClick } = this.props;
+    if (onClick && typeof onClick === "function") {
+      onClick();
+    } else {
+      this.props.history.push(this.config.path);
+    }
   }
 
   render() {
-    const { path, label } = this.config;
     return (
       <Button
         className="links"
         color={this.props.color}
-        onClick={() => this.props.history.push(path)}
+        onClick={this.handleOnClick}
       >
-        {label}
+        {this.config.label}
       </Button>
     );
   }

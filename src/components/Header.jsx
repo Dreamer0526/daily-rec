@@ -28,9 +28,7 @@ class Header extends Component {
                 alt="logo"
                 onClick={this.goToHomePage}
               />
-              <span id="app-name" className="half-padding-left">
-                Daily React
-              </span>
+              <span id="app-name">Daily Record</span>
             </Row>
           </Col>
           <Col xs={{ size: 3, offset: 5 }}>

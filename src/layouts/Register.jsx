@@ -8,6 +8,12 @@ import Link from "../components/Link";
 class Register extends FormManager {
   constructor(props) {
     super(props);
+    this.handleGoSignIn = this.handleGoSignIn.bind(this);
+  }
+
+  handleGoSignIn() {
+    const { form } = this.state;
+    this.props.logInAccount(form);
   }
 
   renderAlert() {
@@ -17,7 +23,9 @@ class Register extends FormManager {
     return (
       <Alert color={type} isOpen={showAlert} toggle={this.handleClearAlert}>
         {desc}
-        {type === "success" && <Link name="login" />}
+        {type === "success" && (
+          <Link name="login" onClick={this.handleGoSignIn} />
+        )}
       </Alert>
     );
   }

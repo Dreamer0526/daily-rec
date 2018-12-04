@@ -8,7 +8,9 @@ import {
   stateBasedProps,
   dispatchBasedProps
 } from "../templates/formManager/formManagerViewMethods";
-
+import {
+  go_log_in
+} from "../actions/registerActions";
 import registerFields from "../fields/registerFields";
 import Register from "../layouts/Register";
 
@@ -23,7 +25,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  ...dispatchBasedProps(dispatch, formSetup)
+  ...dispatchBasedProps(dispatch, formSetup),
+  logInAccount: (form) => dispatch(go_log_in(form))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
