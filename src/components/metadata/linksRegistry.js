@@ -6,7 +6,7 @@ export const linksRegistry = [{
   {
     name: "login",
     path: "/login",
-    label: "Sign In"
+    label: "Sign On"
   }
 ];
 
