@@ -1,12 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const config = require('./config');
 
-mongoose.connect('mongodb://admin:QWEqwe123@ds115244.mlab.com:15244/daily-rec', {
+mongoose.connect(config.database, {
     useNewUrlParser: true
 });
 
 const app = express();
+
 app.use("*", (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");

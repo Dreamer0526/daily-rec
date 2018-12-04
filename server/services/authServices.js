@@ -1,5 +1,9 @@
+const express = require("express");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
+const config = require("../config")
+
 
 const authSchema = new mongoose.Schema({
   username: {
@@ -11,7 +15,9 @@ const authSchema = new mongoose.Schema({
 
 const Auth = mongoose.model("auth", authSchema);
 
-function register(req, res) {
+var router = express.Router();
+
+router.post('/register', (req, res) => {
   const {
     username,
     password
@@ -44,9 +50,9 @@ function register(req, res) {
       });
     }
   });
-}
+});
 
-function login(req, res) {
+router.post('/login', (req, res) => {
   const {
     username,
     password
@@ -55,13 +61,13 @@ function login(req, res) {
   Auth.findOne({
       username
     },
-    (err, doc) => {
+    (err, user) => {
       if (err) {
         res.status(400).send("Unknown error: " + err);
         return
       }
 
-      if (!doc) {
+      if (!user) {
         res.json({
           type: "warning",
           message: "User does not exit"
@@ -72,7 +78,7 @@ function login(req, res) {
       const md5 = crypto.createHash("md5");
       const secretPwd = md5.update(password).digest("hex");
 
-      if (secretPwd !== doc.password) {
+      if (secretPwd !== user.password) {
         res.json({
           type: "warning",
           message: "Wrong Password"
@@ -81,16 +87,17 @@ function login(req, res) {
         return;
       }
 
+      const token = jwt.sign(user.toJSON(), config.secret, {
+        expiresIn: 60 * 60 // expires in 1 hour
+      });
       res.json({
+        token,
         type: "success",
         message: "Login success"
       });
 
     }
   );
-}
+})
 
-module.exports = app => {
-  app.post("/auth/register", (req, res) => register(req, res));
-  app.post("/auth/login", (req, res) => login(req, res));
-};
+module.exports = router;
