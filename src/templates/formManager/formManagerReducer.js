@@ -1,3 +1,5 @@
+import {SET_STATE, REPLACE_STATE} from "../../metadata/actionType"
+
 const origin = {
   alert: {
     type: "",
@@ -6,6 +8,30 @@ const origin = {
   fields: {},
   valid: false
 };
+
+function setState(prevState, diffState) {
+  let nextState = prevState
+  
+  Object.keys(diffState).forEach(key => {
+    const paths = key.split('.')
+    const value = diffState[key]
+
+    const result = setStateByPath(prevState, paths, value)
+    nextState = Object.assign({}, nextState, result)
+  })
+  
+  return nextState
+}
+
+function setStateByPath (object, paths, value) {
+  if (paths.length === 1) return {[paths[0]]: value};
+
+  const path = paths.shift();
+  const subObject = object[path];
+  
+  const result =  Object.assign({}, subObject, setStateByPath(subObject, paths, value))
+  return {[path]: result}
+}
 
 const updatePristine = (state, name) => ({
   ...state,
@@ -55,6 +81,12 @@ const updateFormValue = (state, payload) => {
 
 const reducer = (state = origin, action) => {
   switch (action.type) {
+    case SET_STATE: 
+     return setState(state, action.state);
+
+    case REPLACE_STATE: 
+      return action.state
+
     case "init_fields":
       return {
         ...state,
