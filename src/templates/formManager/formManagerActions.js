@@ -28,7 +28,11 @@ export const update_pristine = name => ({
 });
 
 export const clear_alert = () => ({
-  type: "clear_alert"
+  desc: "Clear alert",
+  type: SET_STATE,
+  state: {
+    "alert": {}
+  }
 });
 
 /**
@@ -36,7 +40,7 @@ export const clear_alert = () => ({
  * @param {Object} payload {username: String, password: String}
  */
 export const validate_from = payload => ({
-  type: "validate_register_form",
+  type: "validate_form",
   payload
 });
 
@@ -56,14 +60,30 @@ export function send_submit_request(subState, submitRequest, payload) {
 
     try {
       const response = await submitRequest(payload);
+
       return dispatch({
-        type: "submit_response",
-        response: response.data
+        desc: "Submit response",
+        type: SET_STATE,
+        state: {
+          alert: {
+            desc: response.data.message,
+            type: response.data.type
+          },
+          valid: false
+        }
       });
 
     } catch (error) {
       return dispatch({
-        type: "submit_error"
+        desc: "Submit error",
+        type: SET_STATE,
+        state: {
+          alert: {
+            type: "danger",
+            desc: "Unknow error occureed"
+          },
+          valid: false
+        }
       });
     }
   };

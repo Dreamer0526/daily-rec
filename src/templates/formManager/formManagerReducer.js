@@ -74,49 +74,14 @@ const updateFormValue = (state, payload) => {
 
 const reducer = (state = origin, action) => {
   switch (action.type) {
+    case "validate_form":
+      return updateFormValue(state, action.payload);
+
     case SET_STATE:
       return setState(state, action.state);
 
     case REPLACE_STATE:
       return action.state;
-
-    case "init_fields":
-      return {
-        ...state,
-        fields: action.fields
-      };
-
-    case "update_pristine":
-      return updatePristine(state, action.name);
-
-    case "clear_alert":
-      return {
-        ...state,
-        alert: {}
-      };
-
-    case "validate_register_form":
-      return updateFormValue(state, action.payload);
-
-    case "submit_response":
-      return {
-        ...state,
-        alert: {
-          desc: action.response.message,
-          type: action.response.type
-        },
-        valid: false
-      };
-
-    case "submit_error":
-      return {
-        ...state,
-        alert: {
-          desc: "Unknow error occurred",
-          type: "danger"
-        },
-        valid: false
-      };
 
     default:
       return state;
