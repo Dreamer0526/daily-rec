@@ -1,28 +1,26 @@
 import {
-  combineReducers
-} from "redux";
-import formManagerReducer from "../templates/formManager/formManagerReducer";
+  basicRegistry
+} from "../utils/stateHelpers";
+import * as formManager from "../templates/formManager/formManagerReducer";
 
 const origin = {
-  goLogIn: false
+  ...formManager.state,
+  goLogIn: false,
+  redirectToHome: false
 }
 
-const goLogInReducer = (state = origin, action) => {
-  switch (action.type) {
-    case "logged_in":
-      return {
-        ...state
-      }
-
-    case "login_error":
-    default:
-      return state;
-  }
+const registry = {
+  ...basicRegistry,
+  ...formManager.registry,
 }
 
-const registerReducer = combineReducers({
-  form: formManagerReducer,
-  goLogIn: goLogInReducer
-});
+const registerReducer = (state = origin, action) => {
+  if (!action.namespace || action.namespace !== "register") return state;
+
+  const handler = registry[action.type];
+  if (!handler) return state;
+
+  return handler(state, action)
+}
 
 export default registerReducer;

@@ -1,12 +1,4 @@
-import {
-  SET_STATE,
-  REPLACE_STATE
-} from "../../metadata/actionType";
-import {
-  setObjectValueByPath
-} from "../../utils/objects";
-
-const origin = {
+export const state = {
   alert: {
     type: "",
     desc: ""
@@ -14,17 +6,6 @@ const origin = {
   fields: {},
   valid: false
 };
-
-function setState(prevState, diffState) {
-  let nextState = prevState;
-
-  for (const key in diffState) {
-    const value = diffState[key];
-    nextState = setObjectValueByPath(nextState, key, value);
-  }
-
-  return nextState;
-}
 
 const updateFormValue = (state, payload) => {
   const {
@@ -61,20 +42,6 @@ const updateFormValue = (state, payload) => {
   };
 };
 
-const reducer = (state = origin, action) => {
-  switch (action.type) {
-    case "validate_form":
-      return updateFormValue(state, action.payload);
-
-    case SET_STATE:
-      return setState(state, action.state);
-
-    case REPLACE_STATE:
-      return action.state;
-
-    default:
-      return state;
-  }
-};
-
-export default reducer;
+export const registry = {
+  "validate_form": (state, action) => updateFormValue(state, action.payload)
+}

@@ -4,10 +4,7 @@ import {
 import {
   register
 } from "../services/authServices";
-import {
-  stateBasedProps,
-  dispatchBasedProps
-} from "../templates/formManager/formManagerViewMethods";
+import * as formManager from "../templates/formManager/formManagerView";
 import {
   go_log_in
 } from "../actions/registerActions";
@@ -15,17 +12,18 @@ import registerFields from "../fields/registerFields";
 import Register from "../layouts/Register";
 
 const formSetup = {
-  subStateName: "register",
+  namespace: "register",
   formFields: registerFields,
   submitService: register
 };
 
 const mapStateToProps = state => ({
-  ...stateBasedProps(state, formSetup)
+  ...formManager.mapStateToProps(state, formSetup),
+  redirectToHome: state.register.redirectToHome
 });
 
 const mapDispatchToProps = dispatch => ({
-  ...dispatchBasedProps(dispatch, formSetup),
+  ...formManager.mapDispatchToProps(dispatch, formSetup),
   logInAccount: (form) => dispatch(go_log_in(form))
 });
 

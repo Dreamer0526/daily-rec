@@ -1,10 +1,32 @@
 /**
+ * @method setState
+ * @param {Object} prevState 
+ * @param {Object} diffState 
+ * @returns {Object} next state
+ */
+export function setState(prevState, diffState) {
+  let nextState = prevState;
+
+  for (const key in diffState) {
+    const value = diffState[key];
+    nextState = setObjectValueByPath(nextState, key, value);
+  }
+
+  return nextState;
+}
+
+export const basicRegistry = {
+  "SET_STATE": (state, action) => setState(state, action.state),
+  "REPLACE_STATE": (nextState) => nextState
+}
+
+/**
  * @method setObjectValueByPath
  * @desc This function sets a named key in an object
  * @param {Object} object Object to be modified
  * @param {String} key A string that states the path, e.g. "fields.username.value"
  * @param {Any} value
- * @return {Object} Modified object
+ * @returns {Object} Modified object
  */
 export function setObjectValueByPath(object, key, value) {
   const recursiveSet = (object, chain, value) => {

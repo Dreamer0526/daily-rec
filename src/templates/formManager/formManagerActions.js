@@ -1,15 +1,11 @@
-import {
-  SET_STATE,
-  REPLACE_STATE
-} from "../../metadata/actionType"
-
 /**
  * @method init_fields
  * @param {Object} fields
  */
-export const init_fields = fields => ({
+export const init_fields = (namespace, fields) => ({
+  namespace,
   desc: "Init fields",
-  type: SET_STATE,
+  type: "SET_STATE",
   state: {
     fields
   }
@@ -19,17 +15,19 @@ export const init_fields = fields => ({
  * @method update_pristine
  * @param {String} name Field name to update
  */
-export const update_pristine = name => ({
+export const update_pristine = (namespace, name) => ({
+  namespace,
   desc: "Update pristine",
-  type: SET_STATE,
+  type: "SET_STATE",
   state: {
     [`fields.${name}.pristine`]: false
   }
 });
 
-export const clear_alert = () => ({
+export const clear_alert = (namespace) => ({
+  namespace,
   desc: "Clear alert",
-  type: SET_STATE,
+  type: "SET_STATE",
   state: {
     "alert": {}
   }
@@ -39,7 +37,8 @@ export const clear_alert = () => ({
  * @method validate_from
  * @param {Object} payload {username: String, password: String}
  */
-export const validate_from = payload => ({
+export const validate_from = (namespace, payload) => ({
+  namespace,
   type: "validate_form",
   payload
 });
@@ -48,13 +47,13 @@ export const validate_from = payload => ({
  * @method send_submit_request
  * @param {Object} payload {username: String, password: String}
  */
-export function send_submit_request(subState, submitRequest, payload) {
+export function send_submit_request(namespace, submitRequest, payload) {
   return async (dispatch, getState) => {
-    dispatch(validate_from(payload));
+    dispatch(validate_from(namespace, payload));
 
     const {
       valid = false
-    } = getState()[subState].form;
+    } = getState()[namespace];
 
     if (!valid) return;
 
@@ -62,8 +61,9 @@ export function send_submit_request(subState, submitRequest, payload) {
       const response = await submitRequest(payload);
 
       return dispatch({
+        namespace,
         desc: "Submit response",
-        type: SET_STATE,
+        type: "SET_STATE",
         state: {
           alert: {
             desc: response.data.message,
@@ -75,8 +75,9 @@ export function send_submit_request(subState, submitRequest, payload) {
 
     } catch (error) {
       return dispatch({
+        namespace,
         desc: "Submit error",
-        type: SET_STATE,
+        type: "SET_STATE",
         state: {
           alert: {
             type: "danger",

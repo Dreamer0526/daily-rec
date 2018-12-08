@@ -2,6 +2,8 @@ import {
   login
 } from "../services/authServices";
 
+const namespace = "register"
+
 /**
  * @method log_in_account
  * @param {Object} payload {username: String, password: String}
@@ -11,11 +13,24 @@ export function go_log_in(form) {
     try {
       await login(form);
       dispatch({
-        type: "logged_in"
+        namespace,
+        desc: "Login success",
+        type: "SET_STATE",
+        state: {
+          redirectToHome: true
+        }
       });
     } catch (error) {
       dispatch({
-        type: "login_error"
+        namespace,
+        desc: "Login Error",
+        type: "SET_STATE",
+        state: {
+          alert: {
+            desc: "Unknown error occurred",
+            type: "danger"
+          }
+        }
       });
     }
   }

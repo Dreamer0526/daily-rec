@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { Form, Col, Alert } from "reactstrap";
 
 import FormManager from "../templates/formManager/FormManager";
@@ -9,6 +10,12 @@ class Register extends FormManager {
   constructor(props) {
     super(props);
     this.handleGoSignIn = this.handleGoSignIn.bind(this);
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.redirectToHome) {
+      this.props.history.push("/");
+    }
   }
 
   handleGoSignIn() {
@@ -49,4 +56,4 @@ class Register extends FormManager {
   }
 }
 
-export default Register;
+export default withRouter(Register);
