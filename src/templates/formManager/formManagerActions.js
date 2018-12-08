@@ -1,18 +1,20 @@
-import {SET_STATE, REPLACE_STATE} from "../../metadata/actionType"
+import {
+  SET_STATE,
+  REPLACE_STATE
+} from "../../metadata/actionType"
 
 /**
  * @method init_fields
  * @param {Object} fields
  */
-// export const init_fields = fields => ({
-//   desc: "Init fields",
-//   type: SET_STATE,
-//   state: {fields}
-// });
 export const init_fields = fields => ({
-  type: "init_fields",
-  fields
+  desc: "Init fields",
+  type: SET_STATE,
+  state: {
+    fields
+  }
 });
+
 /**
  * @method update_pristine
  * @param {String} name Field name to update
@@ -23,13 +25,6 @@ export const update_pristine = name => ({
   state: {
     [`fields.${name}.pristine`]: false
   }
-  // state: {
-  //   fields: {
-  //     [name]: {
-  //       pristine: false
-  //     }
-  //   }
-  // }
 });
 
 export const clear_alert = () => ({

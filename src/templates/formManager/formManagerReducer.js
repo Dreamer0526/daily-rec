@@ -1,4 +1,10 @@
-import {SET_STATE, REPLACE_STATE} from "../../metadata/actionType"
+import {
+  SET_STATE,
+  REPLACE_STATE
+} from "../../metadata/actionType";
+import {
+  setObjectValueByPath
+} from "../../utils/objects";
 
 const origin = {
   alert: {
@@ -10,27 +16,14 @@ const origin = {
 };
 
 function setState(prevState, diffState) {
-  let nextState = prevState
-  
-  Object.keys(diffState).forEach(key => {
-    const paths = key.split('.')
-    const value = diffState[key]
+  let nextState = prevState;
 
-    const result = setStateByPath(prevState, paths, value)
-    nextState = Object.assign({}, nextState, result)
-  })
-  
-  return nextState
-}
+  for (const key in diffState) {
+    const value = diffState[key];
+    nextState = setObjectValueByPath(nextState, key, value);
+  }
 
-function setStateByPath (object, paths, value) {
-  if (paths.length === 1) return {[paths[0]]: value};
-
-  const path = paths.shift();
-  const subObject = object[path];
-  
-  const result =  Object.assign({}, subObject, setStateByPath(subObject, paths, value))
-  return {[path]: result}
+  return nextState;
 }
 
 const updatePristine = (state, name) => ({
@@ -42,7 +35,7 @@ const updatePristine = (state, name) => ({
       pristine: false
     }
   }
-})
+});
 
 const updateFormValue = (state, payload) => {
   const {
@@ -59,8 +52,8 @@ const updateFormValue = (state, payload) => {
       ...originField,
       value,
       desc: value ? "" : "This is a required field"
-    }
-  })
+    };
+  });
 
   const valid = Object.keys(state.fields).every(name => {
     const {
@@ -69,7 +62,7 @@ const updateFormValue = (state, payload) => {
       desc
     } = modified[name];
     return !pristine && value && !desc;
-  })
+  });
 
   return {
     ...state,
@@ -77,21 +70,21 @@ const updateFormValue = (state, payload) => {
     fields: modified,
     valid
   };
-}
+};
 
 const reducer = (state = origin, action) => {
   switch (action.type) {
-    case SET_STATE: 
-     return setState(state, action.state);
+    case SET_STATE:
+      return setState(state, action.state);
 
-    case REPLACE_STATE: 
-      return action.state
+    case REPLACE_STATE:
+      return action.state;
 
     case "init_fields":
       return {
         ...state,
         fields: action.fields
-      }
+      };
 
     case "update_pristine":
       return updatePristine(state, action.name);
@@ -128,6 +121,6 @@ const reducer = (state = origin, action) => {
     default:
       return state;
   }
-}
+};
 
 export default reducer;
