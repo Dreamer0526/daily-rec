@@ -26,17 +26,6 @@ function setState(prevState, diffState) {
   return nextState;
 }
 
-const updatePristine = (state, name) => ({
-  ...state,
-  fields: {
-    ...state.fields,
-    [name]: {
-      ...state.fields[name],
-      pristine: false
-    }
-  }
-});
-
 const updateFormValue = (state, payload) => {
   const {
     fields
