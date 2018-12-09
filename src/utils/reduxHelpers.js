@@ -17,7 +17,7 @@ export function setState(prevState, diffState) {
 
 export const basicRegistry = {
   "SET_STATE": (state, action) => setState(state, action.state),
-  "REPLACE_STATE": (nextState) => nextState
+  "REPLACE_STATE": (state, action) => action.state
 }
 
 /**
@@ -45,4 +45,8 @@ export function setObjectValueByPath(object, key, value) {
   const chain = key.split(".");
   const modified = recursiveSet(object, chain, value);
   return Object.assign({}, object, modified);
+}
+
+export function isActionInNamespace(action, namespace) {
+  return (action.namespace && (action.namespace === namespace || action.namespace.includes(namespace)));
 }

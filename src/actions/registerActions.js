@@ -11,7 +11,9 @@ const namespace = "register"
 export function go_log_in(form) {
   return async dispatch => {
     try {
-      await login(form);
+      const response = await login(form);
+      localStorage.setItem("access_token", response.data.access_token);
+
       dispatch({
         namespace,
         desc: "Login success",
@@ -20,6 +22,7 @@ export function go_log_in(form) {
           redirectToHome: true
         }
       });
+
     } catch (error) {
       dispatch({
         namespace,

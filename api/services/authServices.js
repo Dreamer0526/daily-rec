@@ -87,11 +87,11 @@ router.post('/login', (req, res) => {
         return;
       }
 
-      const token = jwt.sign(user.toJSON(), config.secret, {
+      const access_token = jwt.sign(user.toJSON(), config.secret, {
         expiresIn: 60 * 60 // expires in 1 hour
       });
       res.json({
-        token,
+        access_token,
         type: "success",
         message: "Login success"
       });

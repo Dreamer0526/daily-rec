@@ -1,11 +1,19 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { Form, Col } from "reactstrap";
 
 import FormManager from "../templates/formManager/FormManager";
 
-class Register extends FormManager {
+class Login extends FormManager {
   constructor(props) {
     super(props);
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.alert.type === "success") {
+      this.props.history.push("/");
+      this.props.verifyToken();
+    }
   }
 
   render() {
@@ -27,4 +35,4 @@ class Register extends FormManager {
   }
 }
 
-export default Register;
+export default withRouter(Login);

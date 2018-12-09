@@ -2,20 +2,21 @@ import {
   basicRegistry,
   isActionInNamespace
 } from "../utils/reduxHelpers";
-import * as formManager from "../templates/formManager/formManagerReducer";
 
-const NAMESPACE = "login"
+const NAMESPACE = "authentication";
 
-const origin = {
-  ...formManager.state
+export const origin = {
+  authenticated: false,
+  username: "",
+  expireAt: null,
+  issueAt: null,
 }
 
 const registry = {
-  ...basicRegistry,
-  ...formManager.registry,
+  ...basicRegistry
 }
 
-const loginReducer = (state = origin, action) => {
+const authenticationReducer = (state = origin, action) => {
   if (!isActionInNamespace(action, NAMESPACE)) {
     return state;
   }
@@ -26,4 +27,4 @@ const loginReducer = (state = origin, action) => {
   return handler(state, action)
 }
 
-export default loginReducer;
+export default authenticationReducer;

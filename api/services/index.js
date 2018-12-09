@@ -11,8 +11,8 @@ function authProtectedMiddleware(req, res, next) {
     return res.status(403).send("Un-authenticated request");
   }
 
-  const token = authorization.split("Bearer ")[1];
-  jwt.verify(token, config.secret, (err, decoded) => {
+  const access_token = authorization.split("Bearer ")[1];
+  jwt.verify(access_token, config.secret, (err, decoded) => {
     if (err) {
       return res.status(400).send("Invalid token");
     }

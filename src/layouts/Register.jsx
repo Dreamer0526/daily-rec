@@ -15,6 +15,7 @@ class Register extends FormManager {
   componentWillUpdate(nextProps) {
     if (nextProps.redirectToHome) {
       this.props.history.push("/");
+      this.props.verifyToken();
     }
   }
 

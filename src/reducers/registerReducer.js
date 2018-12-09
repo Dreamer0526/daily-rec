@@ -1,7 +1,10 @@
 import {
-  basicRegistry
-} from "../utils/stateHelpers";
+  basicRegistry,
+  isActionInNamespace
+} from "../utils/reduxHelpers";
 import * as formManager from "../templates/formManager/formManagerReducer";
+
+const NAMESPACE = "register";
 
 const origin = {
   ...formManager.state,
@@ -15,7 +18,9 @@ const registry = {
 }
 
 const registerReducer = (state = origin, action) => {
-  if (!action.namespace || action.namespace !== "register") return state;
+  if (!isActionInNamespace(action, NAMESPACE)) {
+    return state;
+  }
 
   const handler = registry[action.type];
   if (!handler) return state;

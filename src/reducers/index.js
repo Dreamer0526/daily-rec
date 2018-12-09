@@ -4,10 +4,12 @@ import {
 
 import login from "./loginReducer";
 import register from "./registerReducer";
+import authentication from "./authenticationReducer";
 
 const reducers = combineReducers({
   login,
-  register
+  register,
+  authentication
 });
 
 export default reducers;

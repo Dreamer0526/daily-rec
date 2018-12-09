@@ -59,6 +59,7 @@ export function send_submit_request(namespace, submitRequest, payload) {
 
     try {
       const response = await submitRequest(payload);
+      localStorage.setItem("access_token", response.data.access_token);
 
       return dispatch({
         namespace,
@@ -81,7 +82,7 @@ export function send_submit_request(namespace, submitRequest, payload) {
         state: {
           alert: {
             type: "danger",
-            desc: "Unknow error occureed"
+            desc: "Unknow error occurred"
           },
           valid: false
         }

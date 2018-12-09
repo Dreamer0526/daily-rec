@@ -8,7 +8,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import reducers from "./reducers";
 
-import Header from "./components/Header";
+import Header from "./views/headerView";
 import loginView from "./views/loginView";
 import registerView from "./views/registerView";
 
