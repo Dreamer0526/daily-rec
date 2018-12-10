@@ -6,12 +6,12 @@ import { createStore, applyMiddleware } from "redux";
 import { BrowserRouter, Route } from "react-router-dom";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import mySaga from "./sagas";
+import saga from "./sagas";
 import reducers from "./reducers";
 
 import Header from "./layouts/Header";
-// import loginView from "./views/loginView";
-// import registerView from "./views/registerView";
+import Login from "./layouts/Login";
+import Register from "./layouts/Register";
 
 import Home from "./layouts/Home";
 
@@ -22,7 +22,7 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
-sagaMiddleware.run(mySaga);
+sagaMiddleware.run(saga);
 
 const App = () => {
   return (
@@ -37,8 +37,8 @@ const App = () => {
             lg={{ size: 6, offset: 3 }}
           >
             <Route exact path="/" component={Home} />
-            {/* <Route path="/login" component={loginView} />
-            <Route path="/register" component={registerView} /> */}
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
           </Col>
         </div>
       </BrowserRouter>

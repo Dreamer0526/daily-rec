@@ -1,27 +1,32 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Form, Col, Alert } from "reactstrap";
 
 import FormManager from "../templates/formManager/FormManager";
+import registerFields from "../fields/registerFields";
 
 import Link from "../components/Link";
+
+const NAMESPACE = "register";
 
 class Register extends FormManager {
   constructor(props) {
     super(props);
-    this.handleGoSignIn = this.handleGoSignIn.bind(this);
+
+    this.namespace = NAMESPACE;
+    this.fields = registerFields;
+
+    this.signIn = this.signIn.bind(this);
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.redirectToHome) {
-      this.props.history.push("/");
-      this.props.verifyToken();
-    }
-  }
-
-  handleGoSignIn() {
+  signIn() {
     const { form } = this.state;
-    this.props.logInAccount(form);
+    this.props.dispatch({
+      type: "saga_login",
+      payload: form,
+      namespace: this.namespace
+    });
   }
 
   renderAlert() {
@@ -31,9 +36,7 @@ class Register extends FormManager {
     return (
       <Alert color={type} isOpen={showAlert} toggle={this.handleClearAlert}>
         {desc}
-        {type === "success" && (
-          <Link name="login" onClick={this.handleGoSignIn} />
-        )}
+        {type === "success" && <Link name="login" onClick={this.signIn} />}
       </Alert>
     );
   }
@@ -57,4 +60,21 @@ class Register extends FormManager {
   }
 }
 
-export default withRouter(Register);
+const mapStateToProps = state => ({
+  alert: state.register.alert,
+  fields: state.register.fields,
+  valid: state.register.valid
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch: action => dispatch(action),
+  onSubmit: payload =>
+    dispatch({ type: "saga_register", payload, namespace: NAMESPACE })
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Register)
+);

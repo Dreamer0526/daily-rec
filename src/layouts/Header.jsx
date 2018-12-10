@@ -12,7 +12,7 @@ import {
 import Link from "../components/Link";
 import logoUrl from "../static/images/logo.png";
 
-import { verify_auth_saga } from "../actions/authActions";
+import actions from "../actions";
 
 const origin = {
   showDropdownItem: false
@@ -29,7 +29,7 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch({ type: "verify_token" });
+    this.props.dispatch({ type: "saga_verify_auth" });
   }
 
   goToHomePage() {
@@ -37,15 +37,7 @@ class Header extends Component {
   }
 
   handleLogout() {
-    // this.props.logout();
-    this.props.dispatch({
-      type: "SET_STATE",
-      namespace: "authentication",
-      state: {
-        username: "",
-        authenticated: false
-      }
-    });
+    this.props.dispatch(actions.logout());
   }
 
   handleOnToggle() {
@@ -54,7 +46,7 @@ class Header extends Component {
   }
 
   render() {
-    const { authenticated, username } = this.props;
+    const { authenticated, username } = this.props.authentication;
 
     return (
       <div id="app-header">
@@ -100,8 +92,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  authenticated: state.authentication.authenticated,
-  username: state.authentication.username
+  authentication: state.authentication
 });
 
 const mapDispatchToProps = dispatch => ({

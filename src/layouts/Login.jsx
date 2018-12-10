@@ -1,19 +1,18 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Form, Col } from "reactstrap";
 
 import FormManager from "../templates/formManager/FormManager";
+import loginFields from "../fields/loginFields";
 
+const NAMESPACE = "login";
 class Login extends FormManager {
   constructor(props) {
     super(props);
-  }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.alert.type === "success") {
-      this.props.history.push("/");
-      this.props.verifyToken();
-    }
+    this.namespace = NAMESPACE;
+    this.fields = loginFields;
   }
 
   render() {
@@ -35,4 +34,21 @@ class Login extends FormManager {
   }
 }
 
-export default withRouter(Login);
+const mapStateToProps = state => ({
+  alert: state.login.alert,
+  fields: state.login.fields,
+  valid: state.login.valid
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch: action => dispatch(action),
+  onSubmit: payload =>
+    dispatch({ type: "saga_login", payload, namespace: NAMESPACE })
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Login)
+);

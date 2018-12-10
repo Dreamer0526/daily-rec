@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import { Input, Fade, Row, Button, Alert } from "reactstrap";
 
+import actions from "../../actions";
+
+const origin = {
+  form: {}
+};
+
 class FormManager extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      form: {}
-    };
-
-    this.props.initFields();
+    this.state = { ...origin };
 
     this.handleOnFocus = this.handleOnFocus.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -17,8 +19,14 @@ class FormManager extends Component {
     this.handleClearAlert = this.handleClearAlert.bind(this);
   }
 
+  componentDidMount() {
+    const { namespace, fields } = this;
+    this.props.dispatch(actions.init_fields(namespace, fields));
+  }
   handleOnFocus(event) {
-    this.props.onFocus(event.target.name);
+    this.props.dispatch(
+      actions.update_pristine(this.namespace, event.target.name)
+    );
   }
 
   handleOnChange(event) {
@@ -37,7 +45,7 @@ class FormManager extends Component {
   }
 
   handleClearAlert() {
-    this.props.onClearAlert();
+    this.props.dispatch(actions.clear_alert(this.namespace));
   }
 
   renderSubmit({ label = "" } = {}) {

@@ -5,10 +5,6 @@ import {
 } from "./paths/tokenApiPaths";
 
 class TokenServices extends AuthorizedService {
-  constructor(props) {
-    super(props);
-  }
-
   verify() {
     const {
       headers
