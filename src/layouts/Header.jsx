@@ -1,14 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {
-  Row,
-  Col,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import Link from "../components/Link";
 import logoUrl from "../static/images/logo.png";
 
@@ -64,20 +57,19 @@ class Header extends Component {
           </Col>
 
           {authenticated ? (
-            <Col xs={{ size: 2, offset: 6 }}>
-              <Dropdown
-                isOpen={this.state.showDropdownItem}
-                toggle={this.handleOnToggle}
+            <Col xs={{ size: 3, offset: 5 }}>
+              <Button
+                outline
+                disabled
+                color="info"
+                className="half-margin-right"
               >
-                <DropdownToggle caret color="info">
-                  Hi, {username}
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem onClick={this.handleLogout}>
-                    Log out
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
+                Hi, {username}
+              </Button>
+              <Button color="warning" onClick={this.handleLogout}>
+                {" "}
+                Log out{" "}
+              </Button>
             </Col>
           ) : (
             <Col xs={{ size: 3, offset: 5 }}>

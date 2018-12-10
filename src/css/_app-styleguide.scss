@@ -1,11 +1,14 @@
 @import "./_variables.scss";
 
-@import "./header.scss";
-@import "./input.scss";
 @import "./layout.scss";
-@import "./links.scss";
+@import "./components/input.scss";
+@import "./components/links.scss";
+@import "./components/header.scss";
+
+@import "./pages/home.scss";
 
 body {
   font-family: "PingFang SC";
   color: $color-text;
+  overflow: hidden;
 }
