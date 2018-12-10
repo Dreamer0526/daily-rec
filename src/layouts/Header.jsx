@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
   Row,
@@ -9,8 +10,9 @@ import {
   DropdownItem
 } from "reactstrap";
 import Link from "../components/Link";
-
 import logoUrl from "../static/images/logo.png";
+
+import { verify_auth_saga } from "../actions/authActions";
 
 const origin = {
   showDropdownItem: false
@@ -27,7 +29,7 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    this.props.verifyAuthentication();
+    this.props.dispatch({ type: "verify_token" });
   }
 
   goToHomePage() {
@@ -35,7 +37,15 @@ class Header extends Component {
   }
 
   handleLogout() {
-    this.props.logout();
+    // this.props.logout();
+    this.props.dispatch({
+      type: "SET_STATE",
+      namespace: "authentication",
+      state: {
+        username: "",
+        authenticated: false
+      }
+    });
   }
 
   handleOnToggle() {
@@ -89,4 +99,18 @@ class Header extends Component {
   }
 }
 
-export default withRouter(Header);
+const mapStateToProps = state => ({
+  authenticated: state.authentication.authenticated,
+  username: state.authentication.username
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch: action => dispatch(action)
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Header)
+);

@@ -1,28 +1,25 @@
 import React from "react";
 import { Col } from "reactstrap";
 import { Provider } from "react-redux";
-import createSagaMiddleware from "redux-saga";
+import thunkMiddleware from "redux-thunk";
 import { createStore, applyMiddleware } from "redux";
 import { BrowserRouter, Route } from "react-router-dom";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import mySaga from "./sagas";
 import reducers from "./reducers";
 
-import Header from "./layouts/Header";
-// import loginView from "./views/loginView";
-// import registerView from "./views/registerView";
+import Header from "./views/headerView";
+import loginView from "./views/loginView";
+import registerView from "./views/registerView";
 
 import Home from "./layouts/Home";
 
-const sagaMiddleware = createSagaMiddleware();
+const middlewares = [thunkMiddleware];
 
 const store = createStore(
   reducers,
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
+  composeWithDevTools(applyMiddleware(...middlewares))
 );
-
-sagaMiddleware.run(mySaga);
 
 const App = () => {
   return (
@@ -37,8 +34,8 @@ const App = () => {
             lg={{ size: 6, offset: 3 }}
           >
             <Route exact path="/" component={Home} />
-            {/* <Route path="/login" component={loginView} />
-            <Route path="/register" component={registerView} /> */}
+            <Route path="/login" component={loginView} />
+            <Route path="/register" component={registerView} />
           </Col>
         </div>
       </BrowserRouter>
