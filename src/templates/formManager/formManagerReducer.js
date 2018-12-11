@@ -7,32 +7,58 @@ export const state = {
   valid: false
 };
 
+const validateForm = (fields) => {
+  const fieldList = Object.keys(fields);
+  
+  return fieldList.every(name => {
+    const field = fields[name];
+    const {
+      validation,
+      pristine,
+      value,
+      desc
+    } = field;
+
+    if(!validation) return true;
+
+    const {required} = validation;
+
+    return !required || (!pristine && value && !desc);
+  });
+}
+
+const validateField = (field) => {
+  const { value, validation } = field;
+  if(!validation) return field;
+
+
+  return {
+    ...field,
+    desc: validation.required && !value ? "This is a required field" : ""
+  };
+}
+
 const updateFormValue = (state, payload) => {
   const {
     fields
   } = state;
 
-  let modified = fields;
+  const modified = {}
 
-  Object.keys(fields).forEach(fieldName => {
-    const originField = fields[fieldName];
-    const value = payload[fieldName];
-
-    modified[fieldName] = {
-      ...originField,
-      value,
-      desc: value ? "" : "This is a required field"
+  Object.keys(fields).forEach(name => {
+    const value = payload[name];
+    const field = {
+      ...fields[name], 
+      value
     };
+    
+    Object.defineProperty(modified, name, {
+      value: validateField(field), 
+      enumerable: true
+    });
   });
 
-  const valid = Object.keys(state.fields).every(name => {
-    const {
-      pristine,
-      value,
-      desc
-    } = modified[name];
-    return !pristine && value && !desc;
-  });
+  const valid = validateForm(modified);
 
   return {
     ...state,

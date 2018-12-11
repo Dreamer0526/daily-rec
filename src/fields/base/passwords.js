@@ -4,4 +4,7 @@ export const password = {
   pristine: true,
   type: "password",
   placeholder: "Password",
+  validation: {
+    required: true
+  }
 }

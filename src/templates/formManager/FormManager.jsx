@@ -69,11 +69,11 @@ class FormManager extends Component {
 
   renderField(name) {
     const field = this.props.fields[name];
-    const { type } = field;
+    // const { type } = field;
 
-    switch (type) {
-      case "text":
-      case "password":
+    // switch (type) {
+    //   case "text":
+    //   case "password":
         return (
           <Row className="half-margin-bottom">
             <Input
@@ -89,9 +89,9 @@ class FormManager extends Component {
           </Row>
         );
 
-      default:
-        return null;
-    }
+    //   default:
+    //     return null;
+    // }
   }
 
   renderFields() {

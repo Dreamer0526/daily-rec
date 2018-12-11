@@ -1,6 +1,6 @@
 import {
   username
-} from "./base/names";
+} from "./base/name";
 import {
   password
 } from "./base/passwords";
