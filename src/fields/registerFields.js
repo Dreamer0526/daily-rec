@@ -5,13 +5,15 @@ import {
   username
 } from "./base/name";
 import {
-  password
+  password,
+  confirmPassword
 } from "./base/passwords";
 
 const loginFields = {
   email,
   username,
-  password
+  password,
+  confirmPassword
 };
 
 export default loginFields;

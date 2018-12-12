@@ -1,12 +1,22 @@
-export const checkWarning = ({
-  validation,
-  value
-}) => (validation.required && !value) ? ["This is a required field"] : null;
+const HANDLER_REGISTRY = {
+  "length": checkLength,
+  "minLength": checkMinLength,
+  "maxLength": checkMaxLength,
+  "regex": checkRegex,
+  "equal": checkEqual
+}
 
-export const checkError = ({
+export function checkWarning({
   validation,
   value
-}) => {
+}) {
+  return (validation.required && !value) ? ["This is a required field"] : null;
+}
+
+export function checkError({
+  validation,
+  value
+}) {
   const {
     specs
   } = validation;
@@ -15,41 +25,56 @@ export const checkError = ({
   const desc = [];
 
   specs.forEach(spec => {
-    switch (spec.type) {
-      case "minLength":
-        const length = checkMinLength({ ...spec,
-          value
-        })
-        if (length) desc.push(length);
-        break;
+    const handler = HANDLER_REGISTRY[spec.rule];
+    if (!handler) return;
 
-      case "regex":
-        const regex = checkRegex({ ...spec,
-          value
-        })
-        if (regex) desc.push(regex);
-        break;
-
-      default:
-        break;
-    }
+    const result = handler({ ...spec,
+      value
+    });
+    if (result) desc.push(result);
   });
 
   return desc.length ? desc : null;
 }
 
-const checkMinLength = ({
-  rule,
+function checkLength({
+  target,
   value,
   desc
-}) => (!value || value.length < rule) ? desc : null;
+}) {
+  return (!value || value.length !== target) ? desc : null;
+}
 
-const checkRegex = ({
-  rule,
+function checkMinLength({
+  target,
   value,
   desc
-}) => {
-  const pattern = new RegExp(rule);
+}) {
+  return (!value || value.length < target) ? desc : null;
+}
+
+function checkMaxLength({
+  target,
+  value,
+  desc
+}) {
+  return (!value || value.length > target) ? desc : null;
+}
+
+function checkRegex({
+  target,
+  value,
+  desc
+}) {
+  const pattern = new RegExp(target);
   const result = pattern.test(value);
   return !result ? desc : null;
+}
+
+function checkEqual({
+  target,
+  value,
+  desc
+}) {
+  return desc
 }

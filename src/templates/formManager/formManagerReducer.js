@@ -57,6 +57,20 @@ const updateForm = (state, payload) => {
       value
     };
 
+
+    // update reference
+    const {
+      validation = {}
+    } = field
+    const {
+      specs = []
+    } = validation
+    specs.forEach(spec => {
+      if (spec.rule === "equal") {
+        console.log("update reference for", name)
+      }
+    })
+
     const validationInfo = validateField(field);
 
     Object.defineProperty(modified, name, {

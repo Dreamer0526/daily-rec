@@ -6,13 +6,9 @@ export const email = {
   validation: {
     required: false,
     specs: [{
-      type: "regex",
-      rule: /^[a-zA-Z0-9-_\.\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}$/g,
-      desc: "Wrong format"
-    }, {
-      type: "minLength",
-      rule: 6,
-      desc: "Should be longer than 6 charactors"
+      rule: "regex",
+      target: /^[a-zA-Z0-9-_\.\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}$/g,
+      desc: "Wrong email format, e.g. xxx@yy.zz"
     }]
   }
-}
+};
