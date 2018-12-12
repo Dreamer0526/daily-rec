@@ -12,6 +12,7 @@ import reducers from "./reducers";
 import Header from "./layouts/Header";
 import Login from "./layouts/Login";
 import Register from "./layouts/Register";
+import Profile from "./layouts/Profile";
 
 import Home from "./layouts/Home";
 
@@ -39,6 +40,7 @@ const App = () => {
           >
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
+            <Route path="/profile" component={Profile} />
           </Col>
         </div>
       </BrowserRouter>

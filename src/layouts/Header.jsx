@@ -16,6 +16,7 @@ class Header extends Component {
     super(props);
     this.state = { ...origin };
 
+    this.goToProfile = this.goToProfile.bind(this);
     this.goToHomePage = this.goToHomePage.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleOnToggle = this.handleOnToggle.bind(this);
@@ -27,6 +28,10 @@ class Header extends Component {
 
   goToHomePage() {
     this.props.history.push("/");
+  }
+
+  goToProfile() {
+    this.props.history.push("/profile");
   }
 
   handleLogout() {
@@ -60,9 +65,9 @@ class Header extends Component {
             <Col xs={{ size: 3, offset: 5 }}>
               <Button
                 outline
-                disabled
                 color="info"
                 className="half-margin-right"
+                onClick={this.goToProfile}
               >
                 Hi, {username}
               </Button>

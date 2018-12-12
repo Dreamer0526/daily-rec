@@ -7,8 +7,8 @@ export const password = {
     required: true,
     specs: [{
         rule: "minLength",
-        target: 8,
-        desc: "At least 8 charactors",
+        target: 3,
+        desc: "At least 3 charactors",
       },
       {
         rule: "maxLength",
@@ -29,7 +29,7 @@ export const confirmPassword = {
     specs: [{
       rule: "equal",
       target: "password",
-      desc: "Should be the same with password"
+      desc: "Confirm password should match your password"
     }]
   }
 }

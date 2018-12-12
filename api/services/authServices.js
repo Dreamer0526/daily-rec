@@ -4,13 +4,17 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const config = require("../config")
 
-
 const authSchema = new mongoose.Schema({
   username: {
     type: String,
-    unique: true
+    unique: true,
+    required: true
   },
-  password: String
+  password: {
+    type: String,
+    required: true
+  },
+  email: String
 });
 
 const Auth = mongoose.model("auth", authSchema);
@@ -19,7 +23,6 @@ var router = express.Router();
 
 router.post('/register', (req, res) => {
   const {
-    username,
     password
   } = req.body;
 
@@ -27,7 +30,7 @@ router.post('/register', (req, res) => {
   const secretPwd = md5.update(password).digest("hex");
 
   const newDoc = new Auth({
-    username,
+    ...req.body,
     password: secretPwd
   });
 

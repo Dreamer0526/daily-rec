@@ -60,11 +60,7 @@ class Register extends FormManager {
   }
 }
 
-const mapStateToProps = state => ({
-  alert: state.register.alert,
-  fields: state.register.fields,
-  valid: state.register.valid
-});
+const mapStateToProps = state => state.register;
 
 const mapDispatchToProps = dispatch => ({
   dispatch: action => dispatch(action),

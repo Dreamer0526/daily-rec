@@ -34,11 +34,7 @@ class Login extends FormManager {
   }
 }
 
-const mapStateToProps = state => ({
-  alert: state.login.alert,
-  fields: state.login.fields,
-  valid: state.login.valid
-});
+const mapStateToProps = state => state.login;
 
 const mapDispatchToProps = dispatch => ({
   dispatch: action => dispatch(action),

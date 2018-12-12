@@ -19,17 +19,36 @@ function* verifyAuth() {
   try {
     const response = yield token.verify();
 
+    const {
+      username = "",
+        exp = "",
+        iat = "",
+        email = "",
+        config = []
+    } = response.data;
+
     yield put({
       namespace: "authentication",
       desc: "access token verified",
       type: "SET_STATE",
       state: {
         authenticated: true,
-        username: response.data.username,
-        expireAt: response.data.exp,
-        issueAt: response.data.iat,
+        username,
+        expireAt: exp,
+        issueAt: iat,
       }
     });
+
+    yield put({
+      namespace: "profile",
+      desc: "fill in profile info",
+      type: "SET_STATE",
+      state: {
+        username,
+        email,
+        config
+      }
+    })
 
   } catch (error) {
     if (!authExcluded.includes(PathName)) {
