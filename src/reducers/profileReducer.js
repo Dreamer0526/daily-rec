@@ -8,7 +8,7 @@ const NAMESPACE = "profile";
 const origin = {
   username: "",
   email: "",
-  config: []
+  setting: {}
 };
 
 const registry = {

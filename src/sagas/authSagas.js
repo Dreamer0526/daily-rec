@@ -30,23 +30,11 @@ function* login(action) {
     payload
   } = action;
 
-  const result = yield validateForm(namespace, payload)
+  const result = yield validateForm(namespace, payload);
   if (!result) return;
 
   try {
-    const response = yield auth.login(payload)
-
-    yield put({
-      namespace,
-      desc: "login response",
-      type: "SET_STATE",
-      state: {
-        alert: {
-          desc: response.data.message,
-          type: response.data.type
-        }
-      }
-    });
+    const response = yield auth.login(payload);
 
     if (response.data.type === "success") {
       localStorage.setItem("access_token", response.data.access_token);
@@ -56,6 +44,19 @@ function* login(action) {
       });
 
       redirectToHome();
+
+    } else {
+      yield put({
+        namespace,
+        desc: "login response",
+        type: "SET_STATE",
+        state: {
+          alert: {
+            desc: response.data.message,
+            type: response.data.type
+          }
+        }
+      });
     }
 
   } catch (error) {
@@ -78,7 +79,7 @@ function* register(action) {
     payload
   } = action;
 
-  const result = yield validateForm(namespace, payload)
+  const result = yield validateForm(namespace, payload);
   if (!result) return;
 
   try {

@@ -1,15 +1,15 @@
 import axios from "axios";
 import AuthorizedService from "./authorizedService";
 import {
-  pathToTokenVerify
-} from "./paths/tokenApiPaths";
+  pathToProfileSetting
+} from "./paths/profileApiPaths";
 
-class TokenServices extends AuthorizedService {
-  verify() {
+class ProfileServices extends AuthorizedService {
+  fetchSetting() {
     const {
       headers
     } = this;
-    const url = pathToTokenVerify;
+    const url = pathToProfileSetting;
 
     return axios({
       method: "get",
@@ -19,4 +19,4 @@ class TokenServices extends AuthorizedService {
   }
 }
 
-export default TokenServices;
+export default ProfileServices;
