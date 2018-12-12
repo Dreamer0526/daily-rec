@@ -13,7 +13,6 @@ class FormManager extends Component {
 
     this.state = { ...origin };
 
-    this.handleOnFocus = this.handleOnFocus.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleClearAlert = this.handleClearAlert.bind(this);
@@ -22,12 +21,6 @@ class FormManager extends Component {
   componentDidMount() {
     const { namespace, fields } = this;
     this.props.dispatch(actions.init_fields(namespace, fields));
-  }
-
-  handleOnFocus(event) {
-    this.props.dispatch(
-      actions.update_pristine(this.namespace, event.target.name)
-    );
   }
 
   handleOnChange(event) {
@@ -83,7 +76,6 @@ class FormManager extends Component {
           {...field}
           name={name}
           value={this.state.form[name]}
-          // onFocus={this.handleOnFocus}
           onChange={this.handleOnChange}
         />
         <Fade in={desc} tag={"span"} className="field-description">

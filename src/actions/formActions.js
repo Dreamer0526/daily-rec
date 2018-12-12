@@ -7,15 +7,6 @@ export const init_fields = (namespace, fields) => ({
   }
 });
 
-export const update_pristine = (namespace, name) => ({
-  namespace,
-  desc: "Update pristine",
-  type: "SET_STATE",
-  state: {
-    [`fields.${name}.pristine`]: false
-  }
-});
-
 export const clear_alert = (namespace) => ({
   namespace,
   desc: "Clear alert",

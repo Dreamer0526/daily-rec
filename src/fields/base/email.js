@@ -1,7 +1,6 @@
 export const email = {
   value: null,
   desc: null,
-  pristine: true,
   type: "email",
   placeholder: "Email",
   validation: {
