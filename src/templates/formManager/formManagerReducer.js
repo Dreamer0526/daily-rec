@@ -1,6 +1,5 @@
 import {
-  checkWarning,
-  checkError
+  validateField
 } from "../../utils/dictionary";
 
 export const state = {
@@ -28,66 +27,83 @@ const validateForm = (fields) => {
 }
 
 /**
- * @param {Object} field 
- * @returns {Array} Information of validation result. Empty array as valid.
+ * @param {Object} fields 
+ * @param {Object} validation origin field validation
+ * @returns {Object} validation after updating reference
  */
-const validateField = (field) => {
-  if (!field.validation) return [];
+const updateReference = (fields, validation) => {
+  const {
+    specs
+  } = validation;
 
-  const warning = checkWarning(field);
-  if (warning) return warning;
+  if (!specs) return validation;
 
-  const error = checkError(field);
-  if (error) return error;
+  let modified = specs.map(spec => {
+    if (spec.rule === "equal") {
+      const targetValue = fields[spec.target].value
+      return {
+        ...spec,
+        targetValue
+      }
+    }
 
-  return [];
+    return spec;
+  })
+
+  return {
+    ...validation,
+    specs: modified
+  }
 }
 
 const updateForm = (state, payload) => {
-  const {
+  let {
     fields
   } = state;
+  const fieldList = Object.keys(fields);
 
-  const modified = {}
-
-  Object.keys(fields).forEach(name => {
+  // loop thru and update field value
+  fieldList.forEach(name => {
+    const field = fields[name];
     const value = payload[name];
-    const field = {
-      ...fields[name],
+
+    fields[name] = {
+      ...field,
       value
     };
-
-
-    // update reference
-    const {
-      validation = {}
-    } = field
-    const {
-      specs = []
-    } = validation
-    specs.forEach(spec => {
-      if (spec.rule === "equal") {
-        console.log("update reference for", name)
-      }
-    })
-
-    const validationInfo = validateField(field);
-
-    Object.defineProperty(modified, name, {
-      value: {
-        ...field,
-        desc: validationInfo
-      },
-      enumerable: true
-    });
   });
 
-  const valid = validateForm(modified);
+  // loop thru and update validation reference
+  fieldList.forEach(name => {
+    const field = fields[name];
+
+    const {
+      validation
+    } = field;
+    if (!validation) return
+
+    fields[name] = {
+      ...field,
+      validation: updateReference(fields, validation)
+    }
+  });
+
+  // loop thru and validate field
+  fieldList.forEach(name => {
+    const field = fields[name];
+
+    fields[name] = {
+      ...field,
+      desc: validateField(field)
+    }
+  });
+
+  const valid = validateForm(fields);
 
   return {
     ...state,
     alert: {},
-    fields: modified,
+    fields,
     valid
   };
 };

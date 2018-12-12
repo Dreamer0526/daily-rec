@@ -1,22 +1,28 @@
-const HANDLER_REGISTRY = {
-  "length": checkLength,
-  "minLength": checkMinLength,
-  "maxLength": checkMaxLength,
-  "regex": checkRegex,
-  "equal": checkEqual
+/**
+ * @param {Object} field 
+ * @returns {Array} Information of validation result. Empty array as valid.
+ */
+export const validateField = (field) => {
+  if (!field.validation) return [];
+
+  const warning = checkWarning(field);
+  if (warning) return warning;
+
+  const error = checkError(field);
+  if (error) return error;
+
+  return [];
 }
 
-export function checkWarning({
+const checkWarning = ({
   validation,
   value
-}) {
-  return (validation.required && !value) ? ["This is a required field"] : null;
-}
+}) => (validation.required && !value) ? ["This is a required field"] : null;
 
-export function checkError({
+const checkError = ({
   validation,
   value
-}) {
+}) => {
   const {
     specs
   } = validation;
@@ -36,6 +42,14 @@ export function checkError({
 
   return desc.length ? desc : null;
 }
+
+const HANDLER_REGISTRY = {
+  "length": checkLength,
+  "minLength": checkMinLength,
+  "maxLength": checkMaxLength,
+  "regex": checkRegex,
+  "equal": checkEqual
+};
 
 function checkLength({
   target,
@@ -72,9 +86,9 @@ function checkRegex({
 }
 
 function checkEqual({
-  target,
+  targetValue,
   value,
   desc
 }) {
-  return desc
+  return !targetValue || (value !== targetValue) ? desc : null;
 }

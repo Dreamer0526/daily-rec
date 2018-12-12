@@ -4,7 +4,7 @@ export const email = {
   type: "email",
   placeholder: "Email",
   validation: {
-    required: false,
+    required: true,
     specs: [{
       rule: "regex",
       target: /^[a-zA-Z0-9-_\.\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}$/g,

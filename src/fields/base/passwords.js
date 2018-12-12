@@ -23,7 +23,7 @@ export const confirmPassword = {
   value: null,
   desc: null,
   type: "password",
-  placeholder: "Password",
+  placeholder: "Confirm Password",
   validation: {
     required: true,
     specs: [{
