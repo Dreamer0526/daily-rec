@@ -1,6 +1,6 @@
 export const username = {
-  value: "",
-  desc: "",
+  value: null,
+  desc: null,
   pristine: true,
   type: "text",
   placeholder: "User Name",

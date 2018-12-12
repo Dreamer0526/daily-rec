@@ -23,6 +23,7 @@ class FormManager extends Component {
     const { namespace, fields } = this;
     this.props.dispatch(actions.init_fields(namespace, fields));
   }
+
   handleOnFocus(event) {
     this.props.dispatch(
       actions.update_pristine(this.namespace, event.target.name)
@@ -69,25 +70,32 @@ class FormManager extends Component {
 
   renderField(name) {
     const field = this.props.fields[name];
+    const { desc } = field;
+
     // const { type } = field;
 
     // switch (type) {
     //   case "text":
     //   case "password":
-        return (
-          <Row className="half-margin-bottom">
-            <Input
-              {...field}
-              name={name}
-              value={this.state.form[name]}
-              onFocus={this.handleOnFocus}
-              onChange={this.handleOnChange}
-            />
-            <Fade in={field.desc} tag={"span"} className="field-description">
-              {field.desc}
-            </Fade>
-          </Row>
-        );
+    return (
+      <Row className="half-margin-bottom">
+        <Input
+          {...field}
+          name={name}
+          value={this.state.form[name]}
+          // onFocus={this.handleOnFocus}
+          onChange={this.handleOnChange}
+        />
+        <Fade in={desc} tag={"span"} className="field-description">
+          {desc &&
+            desc.map(item => (
+              <span>
+                {item} <br />
+              </span>
+            ))}
+        </Fade>
+      </Row>
+    );
 
     //   default:
     //     return null;

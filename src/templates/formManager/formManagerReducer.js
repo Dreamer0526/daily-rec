@@ -1,3 +1,8 @@
+import {
+  checkWarning,
+  checkError
+} from "../../utils/dictionary";
+
 export const state = {
   alert: {
     type: "",
@@ -9,36 +14,36 @@ export const state = {
 
 const validateForm = (fields) => {
   const fieldList = Object.keys(fields);
-  
+
   return fieldList.every(name => {
     const field = fields[name];
+
     const {
       validation,
-      pristine,
-      value,
       desc
     } = field;
 
-    if(!validation) return true;
-
-    const {required} = validation;
-
-    return !required || (!pristine && value && !desc);
+    return !validation || !desc || !desc.length;
   });
 }
 
+/**
+ * @param {Object} field 
+ * @returns {Array} Information of validation result. Empty array as valid.
+ */
 const validateField = (field) => {
-  const { value, validation } = field;
-  if(!validation) return field;
+  if (!field.validation) return [];
 
+  const warning = checkWarning(field);
+  if (warning) return warning;
 
-  return {
-    ...field,
-    desc: validation.required && !value ? "This is a required field" : ""
-  };
+  const error = checkError(field);
+  if (error) return error;
+
+  return [];
 }
 
-const updateFormValue = (state, payload) => {
+const updateForm = (state, payload) => {
   const {
     fields
   } = state;
@@ -48,12 +53,17 @@ const updateFormValue = (state, payload) => {
   Object.keys(fields).forEach(name => {
     const value = payload[name];
     const field = {
-      ...fields[name], 
+      ...fields[name],
       value
     };
-    
+
+    const validationInfo = validateField(field);
+
     Object.defineProperty(modified, name, {
-      value: validateField(field), 
+      value: {
+        ...field,
+        desc: validationInfo
+      },
       enumerable: true
     });
   });
@@ -69,5 +79,5 @@ const updateFormValue = (state, payload) => {
 };
 
 export const registry = {
-  "validate_form": (state, action) => updateFormValue(state, action.payload)
+  "validate_form": (state, action) => updateForm(state, action.payload)
 }

@@ -1,6 +1,6 @@
 export const password = {
-  value: "",
-  desc: "",
+  value: null,
+  desc: null,
   pristine: true,
   type: "password",
   placeholder: "Password",
