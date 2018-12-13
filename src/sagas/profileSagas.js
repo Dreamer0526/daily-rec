@@ -8,37 +8,45 @@ const {
   profile
 } = withServices("profile");
 
-function* fetchSetting() {
+function* fetchSettings() {
   try {
-    const response = yield profile.fetchSetting();
+    const response = yield profile.fetchSettings();
+
+    const settings = response.data;
+    delete settings.username;
+    delete settings._id;
 
     yield put({
       namespace: "profile",
-      desc: "fetch setting response",
+      desc: "fetch settings response",
       type: "SET_STATE",
       state: {
-        setting: response.data
+        settings
       }
     });
 
   } catch (error) {
-    console.log("eror");
-    // yield put({
-    //   namespace: "profile",
-    //   desc: "fetch setting error",
-    //   type: "SET_STATE",
-    //   state: {
-    //     alert: {
-    //       desc: "Unknow error happened",
-    //       type: "danger"
-    //     }
-    //   }
-    // });
+    yield put({
+      namespace: "profile",
+      desc: "fetch settings error",
+      type: "SET_STATE",
+      state: {
+        alert: {
+          desc: "Unknow error happened",
+          type: "danger"
+        }
+      }
+    });
   }
 }
 
+function* patchSettings(action) {
+  console.log(action.payload)
+}
+
 const profileSagas = [
-  takeEvery("saga_fetch_setting", fetchSetting)
+  takeEvery("saga_fetch_settings", fetchSettings),
+  takeEvery("saga_patch_settings", patchSettings)
 ];
 
 export default profileSagas;

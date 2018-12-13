@@ -1,15 +1,15 @@
 import axios from "axios";
 import AuthorizedService from "./authorizedService";
 import {
-  pathToProfileSetting
+  pathToProfileSettings
 } from "./paths/profileApiPaths";
 
 class ProfileServices extends AuthorizedService {
-  fetchSetting() {
+  fetchSettings() {
     const {
       headers
     } = this;
-    const url = pathToProfileSetting;
+    const url = pathToProfileSettings;
 
     return axios({
       method: "get",

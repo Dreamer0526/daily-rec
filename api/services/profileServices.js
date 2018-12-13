@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 
-const settingSchema = new mongoose.Schema({
+const settingsSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
@@ -9,19 +9,16 @@ const settingSchema = new mongoose.Schema({
   },
   diet: Boolean,
   sports: Boolean
-}, {
-  id: false,
-  versionKey: false
 });
 
-const Setting = mongoose.model("setting", settingSchema);
+const Settings = mongoose.model("settings", settingsSchema);
 
-router.get('/setting', (req, res) => {
+router.get('/settings', (req, res) => {
   const {
     username
   } = req.decoded;
-  console.dir(1)
-  Setting.findOne({
+
+  Settings.findOne({
     username
   }, (err, doc) => {
     if (err) {
@@ -36,7 +33,7 @@ router.get('/setting', (req, res) => {
         sports: false
       };
 
-      new Setting(initial).save(err => {
+      new Settings(initial).save(err => {
         if (err) {
           res.status(400).send("Unknown error: " + err);
 

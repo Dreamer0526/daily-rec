@@ -23,8 +23,7 @@ function* verifyAuth() {
       username = "",
         exp = "",
         iat = "",
-        email = "",
-        config = []
+        email = ""
     } = response.data;
 
     yield put({
@@ -44,9 +43,10 @@ function* verifyAuth() {
       desc: "fill in profile info",
       type: "SET_STATE",
       state: {
-        username,
-        email,
-        config
+        info: {
+          username,
+          email,
+        }
       }
     })
 

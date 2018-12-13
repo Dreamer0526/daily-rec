@@ -3,10 +3,6 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     if (!this.props.authenticated) return <div id="welcome" />;
 

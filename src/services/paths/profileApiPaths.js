@@ -3,4 +3,4 @@ import {
 } from "./baseApiPaths";
 
 export const pathToProfile = `${authorizedApiPath}/profile`;
-export const pathToProfileSetting = `${pathToProfile}/setting`;
+export const pathToProfileSettings = `${pathToProfile}/settings`;

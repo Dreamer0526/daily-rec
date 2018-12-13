@@ -2,13 +2,17 @@ import {
   basicRegistry,
   isActionInNamespace
 } from "../utils/reduxHelpers";
+import * as formManager from "../templates/formManager/formManagerReducer";
 
 const NAMESPACE = "profile";
 
 const origin = {
-  username: "",
-  email: "",
-  setting: {}
+  ...formManager.state,
+  info: {
+    username: "",
+    email: ""
+  },
+  settings: {}
 };
 
 const registry = {
