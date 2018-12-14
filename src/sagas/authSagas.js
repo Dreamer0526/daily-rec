@@ -6,6 +6,7 @@ import {
 import {
   redirectToHome
 } from "../utils/locations";
+import actions from "../actions";
 import withServices from "../services";
 
 const {
@@ -46,30 +47,16 @@ function* login(action) {
       redirectToHome();
 
     } else {
-      yield put({
-        namespace,
-        desc: "login response",
-        type: "SET_STATE",
-        state: {
-          alert: {
-            desc: response.data.message,
-            type: response.data.type
-          }
-        }
-      });
+      const alert = {
+        desc: response.data.message,
+        type: response.data.type
+      };
+
+      yield put(actions.set_error_message(namespace, alert));
     }
 
   } catch (error) {
-    yield put({
-      namespace,
-      type: "SET_STATE",
-      state: {
-        alert: {
-          desc: "Unknow error happened",
-          type: "danger"
-        }
-      }
-    });
+    yield put(actions.set_error_message(namespace));
   }
 }
 
@@ -85,29 +72,15 @@ function* register(action) {
   try {
     const response = yield auth.register(payload);
 
-    yield put({
-      namespace,
-      desc: "register response",
-      type: "SET_STATE",
-      state: {
-        alert: {
-          desc: response.data.message,
-          type: response.data.type
-        }
-      }
-    });
+    const alert = {
+      desc: response.data.message,
+      type: response.data.type
+    };
+
+    yield put(actions.set_error_message(namespace, alert));
 
   } catch (error) {
-    yield put({
-      namespace,
-      type: "SET_STATE",
-      state: {
-        alert: {
-          desc: "Unknow error happened",
-          type: "danger"
-        }
-      }
-    });
+    yield put(actions.set_error_message(namespace));
   }
 }
 

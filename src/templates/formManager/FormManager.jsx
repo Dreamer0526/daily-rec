@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Fade, Row, Button, Alert } from "reactstrap";
+import { Input, Row, Col, Button, Alert, FormFeedback } from "reactstrap";
 
 import actions from "../../actions";
 
@@ -44,9 +44,11 @@ class FormManager extends Component {
 
   renderSubmit({ label = "" } = {}) {
     return (
-      <Button color="primary" onClick={this.handleOnSubmit}>
-        {label}
-      </Button>
+      <Col className="text-center">
+        <Button color="primary" onClick={this.handleOnSubmit}>
+          {label}
+        </Button>
+      </Col>
     );
   }
 
@@ -77,15 +79,9 @@ class FormManager extends Component {
           name={name}
           value={this.state.form[name]}
           onChange={this.handleOnChange}
+          invalid={desc && desc.length}
         />
-        <Fade in={desc} tag={"span"} className="field-description">
-          {desc &&
-            desc.map(item => (
-              <span>
-                {item} <br />
-              </span>
-            ))}
-        </Fade>
+        {desc && desc.map(item => <FormFeedback>{item}</FormFeedback>)}
       </Row>
     );
 

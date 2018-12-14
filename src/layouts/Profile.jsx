@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Col } from "reactstrap";
+import { Form, FormGroup, Col, Label, Input } from "reactstrap";
 import FormManager from "../templates/formManager/FormManager";
 import Switch from "../components/Switch";
 
@@ -21,9 +21,11 @@ class Profile extends FormManager {
   }
 
   componentDidMount() {
-    this.props.dispatch({
-      type: "saga_fetch_settings"
-    });
+    const propExists = Object.keys(this.props.settings).length;
+
+    if (!propExists) {
+      this.props.dispatch({ type: "saga_fetch_settings" });
+    }
   }
 
   componentDidUpdate() {
@@ -39,22 +41,49 @@ class Profile extends FormManager {
     this.setState({ form });
   }
 
-  render() {
-    const { info, settings } = this.props;
-    const { username, email } = info;
+  renderInfo() {
+    const { username, email } = this.props.info;
 
     return (
-      <Form>
-        <Col xs={12}> {this.renderAlert()}</Col>
+      <Col xs={12}>
+        <Label size="lg" xs={{ size: 10, offset: 1 }}>
+          User Info
+        </Label>
+        <FormGroup row className="align-items-baseline">
+          <Label xs={4} className="text-right">
+            User Name:
+          </Label>
+          <Col xs={6}>
+            <Input value={username} disabled />
+          </Col>
+        </FormGroup>
+        <FormGroup row className="align-items-baseline">
+          <Label xs={4} className="text-right">
+            Email:
+          </Label>
+          <Col xs={6}>
+            <Input value={email} disabled />
+          </Col>
+        </FormGroup>
+      </Col>
+    );
+  }
 
-        <Col xs={12}>User Name: {username}</Col>
-        <Col xs={12}>Email: {email}</Col>
+  renderSettings() {
+    const { settings } = this.props;
 
+    return (
+      <Col xs={12}>
+        <Label size="lg" xs={{ size: 10, offset: 1 }}>
+          Settings
+        </Label>
         {Object.keys(settings).map(setting => {
           const value = settings[setting];
           return (
-            <Col xs={12}>
-              {setting}:
+            <Col>
+              <Label xs={4} className="text-right">
+                {setting}:
+              </Label>
               <Switch
                 onToggle={value => this.onToggle(setting, value)}
                 value={value}
@@ -62,8 +91,19 @@ class Profile extends FormManager {
             </Col>
           );
         })}
+        <Col className="base-margin-top">
+          {this.renderSubmit({ label: "Update" })}
+        </Col>
+      </Col>
+    );
+  }
 
-        <Col xs={12}> {this.renderSubmit({ label: "Update" })} </Col>
+  render() {
+    return (
+      <Form>
+        <Col xs={12}> {this.renderAlert()}</Col>
+        {this.renderInfo()}
+        {this.renderSettings()}
       </Form>
     );
   }

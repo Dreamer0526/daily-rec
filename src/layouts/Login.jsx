@@ -21,14 +21,14 @@ class Login extends FormManager {
         {this.renderAlert()}
 
         <Col
-          className="text-center"
           xs={{ size: 12 }}
           md={{ size: 10, offset: 1 }}
           lg={{ size: 8, offset: 2 }}
         >
           {this.renderFields()}
-          {this.renderSubmit({ label: "Login" })}
         </Col>
+
+        {this.renderSubmit({ label: "Login" })}
       </Form>
     );
   }

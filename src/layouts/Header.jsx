@@ -71,9 +71,8 @@ class Header extends Component {
               >
                 Hi, {username}
               </Button>
-              <Button color="warning" onClick={this.handleLogout}>
-                {" "}
-                Log out{" "}
+              <Button color="info" onClick={this.handleLogout}>
+                Log out
               </Button>
             </Col>
           ) : (

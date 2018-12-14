@@ -2,6 +2,7 @@ import {
   put,
   takeEvery
 } from "redux-saga/effects";
+import actions from "../actions";
 import withServices from "../services";
 
 const {
@@ -23,17 +24,8 @@ function* fetchSettings() {
     });
 
   } catch (error) {
-    yield put({
-      namespace: "profile",
-      desc: "fetch settings error",
-      type: "SET_STATE",
-      state: {
-        alert: {
-          desc: "Unknow error happened",
-          type: "danger"
-        }
-      }
-    });
+    yield put(actions.set_error_message("profile"));
+
   }
 }
 
@@ -51,30 +43,10 @@ function* patchSettings(action) {
       }
     });
 
-    yield put({
-      namespace: "profile",
-      desc: "patch settings success",
-      type: "SET_STATE",
-      state: {
-        alert: {
-          desc: "Settings saved",
-          type: "success"
-        }
-      }
-    });
+    yield put(actions.set_success_message("profile"));
 
   } catch (error) {
-    yield put({
-      namespace: "profile",
-      desc: "patch settings error",
-      type: "SET_STATE",
-      state: {
-        alert: {
-          desc: "Unknow error happened",
-          type: "danger"
-        }
-      }
-    });
+    yield put(actions.set_error_message("profile"));
   }
 }
 
