@@ -17,6 +17,7 @@ const origin = {
 
 const registry = {
   ...basicRegistry,
+  ...formManager.registry
 };
 
 const profileReducer = (state = origin, action) => {

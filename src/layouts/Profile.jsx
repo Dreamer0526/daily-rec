@@ -16,6 +16,8 @@ class Profile extends FormManager {
   constructor(props) {
     super(props);
     this.state = { ...origin };
+
+    this.namespace = NAMESPACE;
   }
 
   componentDidMount() {

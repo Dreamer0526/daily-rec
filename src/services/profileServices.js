@@ -17,6 +17,20 @@ class ProfileServices extends AuthorizedService {
       headers
     });
   }
+
+  patchSettings(settings) {
+    const {
+      headers
+    } = this;
+    const url = pathToProfileSettings;
+
+    return axios({
+      method: "post",
+      url,
+      headers,
+      data: settings
+    });
+  }
 }
 
 export default ProfileServices;

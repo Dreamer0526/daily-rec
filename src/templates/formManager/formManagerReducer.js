@@ -11,6 +11,10 @@ export const state = {
   valid: false
 };
 
+export const registry = {
+  "validate_form": (state, action) => updateForm(state, action.payload)
+}
+
 const validateForm = (fields) => {
   const fieldList = Object.keys(fields);
 
@@ -107,7 +111,3 @@ const updateForm = (state, payload) => {
     valid
   };
 };
-
-export const registry = {
-  "validate_form": (state, action) => updateForm(state, action.payload)
-}

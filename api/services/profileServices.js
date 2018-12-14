@@ -45,8 +45,43 @@ router.get('/settings', (req, res) => {
       return;
     }
 
-    res.json(doc);
+    res.json(filter(doc));
   });
 });
+
+router.post('/settings', (req, res) => {
+  const {
+    username
+  } = req.decoded;
+  const settings = req.body;
+
+  Settings.findOneAndUpdate({
+    username
+  }, settings, {
+    new: true
+  }, (err, doc) => {
+    if (err) {
+      res.status(400).send("Unknown error: " + err);
+      return;
+    }
+
+    res.json(filter(doc));
+    return;
+  })
+});
+
+const filter = (doc) => {
+  const result = doc._doc;
+
+  delete result.username;
+
+  for (const key in result) {
+    if (key.startsWith("_")) {
+      delete result[key];
+    }
+  }
+
+  return result;
+}
 
 module.exports = router;
