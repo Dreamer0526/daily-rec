@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Input, Row, Col, Button, Alert, FormFeedback } from "reactstrap";
+import {
+  Input,
+  Row,
+  Col,
+  Button,
+  Alert,
+  FormFeedback,
+  Label
+} from "reactstrap";
 
 import actions from "../../actions";
 
@@ -74,6 +82,11 @@ class FormManager extends Component {
     //   case "password":
     return (
       <Row className="half-margin-bottom">
+        {field.label && (
+          <Label xs={4} className="text-right">
+            {field.label}
+          </Label>
+        )}
         <Input
           {...field}
           name={name}

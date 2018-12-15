@@ -1,15 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { Row, Col, Label, Button, Badge } from "reactstrap";
+import { Col, Label, Button, Badge } from "reactstrap";
 
-const origin = {};
+import Diet from "./recordModals/Diet";
+
+const origin = {
+  showModal: false
+};
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { ...origin };
 
+    this.onToggle = this.onToggle.bind(this);
     this.startRecording = this.startRecording.bind(this);
   }
 
@@ -21,7 +26,13 @@ class Home extends Component {
     }
   }
 
-  startRecording() {}
+  onToggle() {
+    this.setState({ showModal: !this.state.showModal });
+  }
+
+  startRecording() {
+    this.setState({ showModal: true });
+  }
 
   renderHistory() {
     const { settings } = this.props;
@@ -47,18 +58,15 @@ class Home extends Component {
         md={{ size: 10, offset: 1 }}
         lg={{ size: 8, offset: 2 }}
       >
-        <Col
-          xs={{ size: 4, offset: 8 }}
-          className="align-items-baseline text-right"
-        >
+        <Col xs={{ size: 4, offset: 8 }} className="text-right">
           <Button
             id="button-recording"
             color="danger"
-            onClick={this.startRecording}
+            onClick={this.onToggle}
           />
           <Badge color="warning">Click to start recording...</Badge>
         </Col>
-
+        <Diet show={this.state.showModal} onToggle={this.onToggle} />
         {this.renderHistory()}
       </Col>
     );

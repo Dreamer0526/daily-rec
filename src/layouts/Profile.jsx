@@ -40,7 +40,7 @@ class Profile extends FormManager {
         <Label size="lg" xs={{ size: 10, offset: 1 }}>
           User Info
         </Label>
-        <FormGroup row className="align-items-baseline">
+        <FormGroup row>
           <Label xs={4} className="text-right">
             User Name:
           </Label>
@@ -48,7 +48,7 @@ class Profile extends FormManager {
             <Input value={username} disabled />
           </Col>
         </FormGroup>
-        <FormGroup row className="align-items-baseline">
+        <FormGroup row>
           <Label xs={4} className="text-right">
             Email:
           </Label>
