@@ -4,8 +4,6 @@ import { Form, FormGroup, Col, Label, Input } from "reactstrap";
 import FormManager from "../templates/formManager/FormManager";
 import Switch from "../components/Switch";
 
-import { isEqual } from "../utils/objectHelpers";
-
 const NAMESPACE = "profile";
 
 const origin = {
@@ -25,13 +23,6 @@ class Profile extends FormManager {
 
     if (!propExists) {
       this.props.dispatch({ type: "saga_fetch_settings" });
-    }
-  }
-
-  componentDidUpdate() {
-    const { settings } = this.props;
-    if (!isEqual(settings, this.state.form)) {
-      this.setState({ form: settings });
     }
   }
 
