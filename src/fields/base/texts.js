@@ -1,6 +1,6 @@
 export const multiText = {
   value: [],
-  desc: null,
+  desc: [],
   type: "multiText",
   label: "Multi Text"
 };

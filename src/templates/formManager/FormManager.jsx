@@ -1,18 +1,12 @@
 import React, { Component } from "react";
-import {
-  Input,
-  Row,
-  Col,
-  Button,
-  Alert,
-  FormFeedback,
-  Label
-} from "reactstrap";
-import Rating from "react-rating";
+import { Row, Col, Button, Alert, Label } from "reactstrap";
+
+import Input from "../../components/Input";
+import Rating from "../../components/Rating";
+import MultiInput from "../../components/MultiInput";
 
 import actions from "../../actions";
 import { isEmpty } from "../../utils/objectHelpers";
-import { removeIndex } from "../../utils/arrayHelpers";
 
 const origin = {
   form: {}
@@ -34,31 +28,13 @@ class FormManager extends Component {
     this.props.dispatch(actions.init_fields(namespace, fields));
   }
 
-  setFormValue(name, value) {
+  handleOnChange(name, value) {
     this.setState({
       form: {
         ...this.state.form,
         [name]: value
       }
     });
-  }
-
-  handleOnChange(event) {
-    const { name, value } = event.target;
-    this.setFormValue(name, value);
-  }
-
-  handleAddItem(event, index) {
-    const { name, value } = event.target;
-    let modified = this.state.form[name];
-    modified[index] = value;
-
-    this.setFormValue(name, modified);
-  }
-
-  handleRemoveItem(name, index) {
-    const value = this.state.form[name];
-    this.setFormValue(name, removeIndex(value, index));
   }
 
   handleOnSubmit() {
@@ -92,74 +68,19 @@ class FormManager extends Component {
 
   renderField(name) {
     const field = this.props.fields[name];
-    const { desc, type, cssFor } = field;
-
-    const value = this.state.form[name];
+    const { type } = field;
 
     switch (type) {
       case "multiText":
         return (
-          <Row className="half-margin-bottom">
-            <Col xs={2} className="text-right">
-              <Label>{field.label}</Label>
-            </Col>
-            {value.concat("").map((item, index) => (
-              <Col xs={2}>
-                <Input
-                  {...field}
-                  name={name}
-                  value={item || ""}
-                  onChange={event => this.handleAddItem(event, index)}
-                />
-                {index !== value.length && (
-                  <span
-                    className="fas fa-minus-circle button-remove"
-                    onClick={() => this.handleRemoveItem(name, index)}
-                  />
-                )}
-              </Col>
-            ))}
-          </Row>
+          <MultiInput {...field} name={name} onChange={this.handleOnChange} />
         );
 
       case "rating":
-        return (
-          <Row>
-            <Col xs={2} className="text-right">
-              <Label>{field.label}</Label>
-            </Col>
-            <Col xs={4}>
-              <Rating
-                {...field}
-                {...cssFor}
-                name={name}
-                value={value} // DEBUG
-                onChange={value => this.setFormValue(name, value)} // TODO
-              />
-            </Col>
-          </Row>
-        );
+        return <Rating {...field} name={name} onChange={this.handleOnChange} />;
 
       default:
-        return (
-          <Row className="half-margin-bottom">
-            {field.label && (
-              <Label xs={2} className="text-right">
-                {field.label}
-              </Label>
-            )}
-            <Col xs={field.label ? 9 : 12}>
-              <Input
-                {...field}
-                name={name}
-                value={value}
-                onChange={this.handleOnChange}
-                invalid={desc && desc.length}
-              />
-              {desc && desc.map(item => <FormFeedback>{item}</FormFeedback>)}
-            </Col>
-          </Row>
-        );
+        return <Input {...field} name={name} onChange={this.handleOnChange} />;
     }
   }
 
@@ -179,9 +100,8 @@ class FormManager extends Component {
     const fieldsList = Object.keys(fields);
     fieldsList.forEach(name => {
       const { value } = fields[name];
-
       if (value instanceof Array) {
-        form[name] = new Array();
+        form[name] = [];
       } else {
         form[name] = value;
       }

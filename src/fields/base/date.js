@@ -1,6 +1,11 @@
+const today = new Date();
+const y = today.getFullYear();
+const m = today.getMonth() + 1;
+const d = today.getDate();
+
 export const date = {
-  value: new Date().toLocaleDateString().replace(/\//g, "-"),
-  desc: "",
+  value: `${y}-${m}-${d}`,
+  desc: [],
   type: "date",
   label: "Date",
   validation: {

@@ -1,6 +1,6 @@
 export const email = {
   value: "",
-  desc: null,
+  desc: [],
   type: "email",
   placeholder: "Email",
   validation: {

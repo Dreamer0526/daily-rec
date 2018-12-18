@@ -1,6 +1,6 @@
 export const username = {
   value: "",
-  desc: null,
+  desc: [],
   type: "text",
   placeholder: "User Name",
   validation: {

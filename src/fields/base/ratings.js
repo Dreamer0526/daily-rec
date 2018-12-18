@@ -1,6 +1,6 @@
 export const coloredRating = {
   value: 0,
-  desc: "",
+  desc: [],
   type: "rating",
   label: "Rating",
   cssFor: {

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Row, Col } from "reactstrap";
 
 import FormManager from "../../templates/formManager/FormManager";
 import dietFields from "../../fields/dietFields";
@@ -21,13 +21,25 @@ class Diet extends FormManager {
         <ModalHeader
           className="base-padding-left"
           close={
-            <span className="fas fa-times" onClick={this.props.onToggle} />
+            <span
+              className="fas fa-times general-button"
+              onClick={this.props.onToggle}
+            />
           }
         >
           Diet
         </ModalHeader>
-        <ModalBody>{this.renderFields()}</ModalBody>
-        <ModalFooter />
+        <ModalBody>
+          <Row className="align-items-center">
+            <Col xs="11">
+              {this.renderAlert()}
+              {this.renderFields()}
+            </Col>
+            <Col xs="1">
+              <i class="fas fa-chevron-right fa-2x general-button" />
+            </Col>
+          </Row>
+        </ModalBody>
       </Modal>
     );
   }
@@ -37,8 +49,8 @@ const mapStateToProps = state => state.diet;
 
 const mapDispatchToProps = dispatch => ({
   dispatch: action => dispatch(action),
-  onSubmit: payload => {}
-  // dispatch({ type: "saga_login", payload, namespace: NAMESPACE })
+  onSubmit: payload =>
+    dispatch({ type: "saga_patch_record", payload, namespace: NAMESPACE })
 });
 
 export default connect(

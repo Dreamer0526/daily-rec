@@ -1,6 +1,6 @@
 export const password = {
   value: "",
-  desc: null,
+  desc: [],
   type: "password",
   placeholder: "Password",
   validation: {
@@ -21,7 +21,7 @@ export const password = {
 
 export const confirmPassword = {
   value: "",
-  desc: null,
+  desc: [],
   type: "password",
   placeholder: "Confirm Password",
   validation: {
