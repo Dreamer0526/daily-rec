@@ -14,13 +14,13 @@ const dietFields = {
     label: "Breakfast"
   },
   extraMeal1: { ...multiText,
-    label: "Extra Meal 1"
+    label: "Extra Meal"
   },
   lunch: { ...multiText,
     label: "Lunch"
   },
   extraMeal2: { ...multiText,
-    label: "Extra Meal 2"
+    label: "Extra Meal"
   },
   dinner: { ...multiText,
     label: "Dinner"

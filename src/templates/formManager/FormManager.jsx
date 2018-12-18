@@ -6,7 +6,6 @@ import Rating from "../../components/Rating";
 import MultiInput from "../../components/MultiInput";
 
 import actions from "../../actions";
-import { isEmpty } from "../../utils/objectHelpers";
 
 const origin = {
   form: {}
@@ -26,6 +25,23 @@ class FormManager extends Component {
   componentDidMount() {
     const { namespace, fields } = this;
     this.props.dispatch(actions.init_fields(namespace, fields));
+
+    this.initFields();
+  }
+
+  initFields() {
+    let { form } = this.state;
+    const { fields } = this;
+
+    const fieldsList = Object.keys(fields);
+    fieldsList.forEach(name => {
+      const { value } = fields[name];
+      if (value instanceof Array) {
+        form[name] = [];
+      } else {
+        form[name] = value;
+      }
+    });
   }
 
   handleOnChange(name, value) {
@@ -67,7 +83,7 @@ class FormManager extends Component {
   }
 
   renderField(name) {
-    const field = this.props.fields[name];
+    const field = this.fields[name];
     const { type } = field;
 
     switch (type) {
@@ -85,27 +101,8 @@ class FormManager extends Component {
   }
 
   renderFields() {
-    this.initFields();
-
-    const { fields } = this.props;
-    const fieldsList = Object.keys(fields);
+    const fieldsList = Object.keys(this.fields);
     return fieldsList.map(name => this.renderField(name));
-  }
-
-  initFields() {
-    let { form } = this.state;
-    if (!isEmpty(form)) return;
-
-    const { fields } = this.props;
-    const fieldsList = Object.keys(fields);
-    fieldsList.forEach(name => {
-      const { value } = fields[name];
-      if (value instanceof Array) {
-        form[name] = [];
-      } else {
-        form[name] = value;
-      }
-    });
   }
 
   render() {
