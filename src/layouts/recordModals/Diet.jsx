@@ -1,76 +1,47 @@
 import React from "react";
-import Rating from "react-rating";
-import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Label,
-  Input,
-  Col,
-  Row
-} from "reactstrap";
+import { connect } from "react-redux";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-const origin = {
-  date: new Date().toLocaleDateString().replace(/\//g, "-")
-};
+import FormManager from "../../templates/formManager/FormManager";
+import dietFields from "../../fields/dietFields";
 
-class Diet extends React.Component {
+const NAMESPACE = "dietModal";
+
+class Diet extends FormManager {
   constructor(props) {
     super(props);
-    this.state = { ...origin };
+
+    this.fields = dietFields;
+    this.namespace = NAMESPACE;
   }
 
   render() {
-    const ratingStyles = {
-      className: "colored-rating",
-      emptySymbol: "far fa-star",
-      fullSymbol: [1, 2, 3, 4, 5].map(id => `fas fa-star rating-step-${id}`)
-    };
-
     return (
       <Modal size="lg" isOpen={this.props.show}>
         <ModalHeader
           className="base-padding-left"
           close={
-            <button className="close" onClick={this.props.onToggle}>
-              &times;
-            </button>
+            <span className="fas fa-times" onClick={this.props.onToggle} />
           }
         >
           Diet
         </ModalHeader>
-        <ModalBody>
-          <Row>
-            <Col xs={4} className="text-right">
-              <Label>Date</Label>
-            </Col>
-            <Col xs={4}>
-              <Input
-                xs={8}
-                type="date"
-                value={this.state.date}
-                onChange={event => this.setState({ date: event.target.value })}
-              />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col xs={4} className="text-right">
-              <Label>Rating</Label>
-            </Col>
-            <Col xs={4}>
-              <Rating
-                {...ratingStyles}
-                onChange={value => console.log(value)}
-              />
-            </Col>
-          </Row>
-        </ModalBody>
+        <ModalBody>{this.renderFields()}</ModalBody>
         <ModalFooter />
       </Modal>
     );
   }
 }
 
-export default Diet;
+const mapStateToProps = state => state.diet;
+
+const mapDispatchToProps = dispatch => ({
+  dispatch: action => dispatch(action),
+  onSubmit: payload => {}
+  // dispatch({ type: "saga_login", payload, namespace: NAMESPACE })
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Diet);

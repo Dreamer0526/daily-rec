@@ -7,6 +7,7 @@ import FormManager from "../templates/formManager/FormManager";
 import loginFields from "../fields/loginFields";
 
 const NAMESPACE = "login";
+
 class Login extends FormManager {
   constructor(props) {
     super(props);

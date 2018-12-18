@@ -1,5 +1,5 @@
 export const password = {
-  value: null,
+  value: "",
   desc: null,
   type: "password",
   placeholder: "Password",
@@ -20,7 +20,7 @@ export const password = {
 }
 
 export const confirmPassword = {
-  value: null,
+  value: "",
   desc: null,
   type: "password",
   placeholder: "Confirm Password",

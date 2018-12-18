@@ -2,3 +2,14 @@
   display: inline-block;
   margin: 0 $half-space;
 }
+
+.button-remove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(-50%, -50%)
+}
+
+.button-add {
+  font-size: 1.5em
+}

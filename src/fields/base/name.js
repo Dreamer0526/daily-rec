@@ -1,5 +1,5 @@
 export const username = {
-  value: null,
+  value: "",
   desc: null,
   type: "text",
   placeholder: "User Name",

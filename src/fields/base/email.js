@@ -1,5 +1,5 @@
 export const email = {
-  value: null,
+  value: "",
   desc: null,
   type: "email",
   placeholder: "Email",
