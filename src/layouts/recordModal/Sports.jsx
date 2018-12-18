@@ -3,15 +3,15 @@ import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 
 import FormManager from "../../templates/formManager/FormManager";
-import dietFields from "../../fields/dietFields";
+import sportsFields from "../../fields/sportsFields";
 
-const NAMESPACE = "dietModal";
+const NAMESPACE = "sportsModal";
 
-class Diet extends FormManager {
+class Sports extends FormManager {
   constructor(props) {
     super(props);
 
-    this.fields = dietFields;
+    this.fields = sportsFields;
     this.namespace = NAMESPACE;
 
     this.handleNext = this.handleNext.bind(this);
@@ -57,7 +57,7 @@ class Diet extends FormManager {
   }
 }
 
-const mapStateToProps = state => state.diet;
+const mapStateToProps = state => state.sports;
 
 const mapDispatchToProps = dispatch => ({
   dispatch: action => dispatch(action)
@@ -66,4 +66,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Diet);
+)(Sports);

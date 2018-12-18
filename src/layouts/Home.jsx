@@ -64,7 +64,7 @@ class Home extends Component {
           />
           <Badge color="warning">Click to start recording...</Badge>
         </Col>
-        <RecordModal show={this.state.showModal} onToggle={this.onToggle} />
+        {this.state.showModal && <RecordModal onToggle={this.onToggle} />}
         {this.renderHistory()}
       </Col>
     );

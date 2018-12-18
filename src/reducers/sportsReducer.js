@@ -4,7 +4,7 @@ import {
 } from "../utils/reduxHelpers";
 import * as formManager from "../templates/formManager/formManagerReducer";
 
-const NAMESPACE = "dietModal";
+const NAMESPACE = "sportsModal";
 
 const origin = {
   ...formManager.state,
@@ -16,7 +16,7 @@ const registry = {
   ...formManager.registry,
 };
 
-const dietReducer = (state = origin, action) => {
+const sportsReducer = (state = origin, action) => {
   if (!isActionInNamespace(action, NAMESPACE)) {
     return state;
   }
@@ -27,4 +27,4 @@ const dietReducer = (state = origin, action) => {
   return handler(state, action);
 }
 
-export default dietReducer;
+export default sportsReducer;

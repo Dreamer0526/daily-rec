@@ -7,13 +7,15 @@ import register from "./registerReducer";
 import authentication from "./authenticationReducer";
 import profile from "./profileReducer";
 import diet from "./dietReducer";
+import sports from "./sportsReducer";
 
 const reducers = combineReducers({
   login,
   register,
   authentication,
   profile,
-  diet
+  diet,
+  sports
 });
 
 export default reducers;
