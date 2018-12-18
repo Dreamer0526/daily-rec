@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Col, Label, Button, Badge } from "reactstrap";
 
-import Diet from "./recordModals/Diet";
+import RecordModal from "./recordModal/RecordModal";
 
 const origin = {
   showModal: false
@@ -40,11 +40,9 @@ class Home extends Component {
     return (
       <Col>
         <Label size="lg">History</Label>
-        {Object.keys(settings).map(key => {
-          if (settings[key]) {
-            return <Col>{`history for ${key}`}</Col>;
-          }
-        })}
+        {Object.keys(settings).map(
+          key => settings[key] && <Col>{`history for ${key}`}</Col>
+        )}
       </Col>
     );
   }
@@ -66,7 +64,7 @@ class Home extends Component {
           />
           <Badge color="warning">Click to start recording...</Badge>
         </Col>
-        <Diet show={this.state.showModal} onToggle={this.onToggle} />
+        <RecordModal show={this.state.showModal} onToggle={this.onToggle} />
         {this.renderHistory()}
       </Col>
     );

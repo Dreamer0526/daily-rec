@@ -28,7 +28,7 @@ class Rating extends React.Component {
         <Col xs={2} className="text-right">
           <Label>{label}</Label>
         </Col>
-        <Col xs={4}>
+        <Col>
           <ReactRating
             {...rest}
             {...cssFor}

@@ -7,7 +7,8 @@ import * as formManager from "../templates/formManager/formManagerReducer";
 const NAMESPACE = "dietModal";
 
 const origin = {
-  ...formManager.state
+  ...formManager.state,
+  stagedrecord: {}
 };
 
 const registry = {

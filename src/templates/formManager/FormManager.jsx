@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Button, Alert, Label } from "reactstrap";
+import { Col, Button, Alert } from "reactstrap";
 
 import Input from "../../components/Input";
 import Rating from "../../components/Rating";
