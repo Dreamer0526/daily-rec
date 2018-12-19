@@ -1,36 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { Form, Col } from "reactstrap";
+import { Col } from "reactstrap";
 
 import FormManager from "../templates/formManager/FormManager";
 import loginFields from "../fields/loginFields";
 
 const NAMESPACE = "login";
 
-class Login extends FormManager {
+class Login extends React.Component {
   constructor(props) {
     super(props);
-
-    this.namespace = NAMESPACE;
-    this.fields = loginFields;
   }
 
   render() {
     return (
-      <Form id="form-register">
-        {this.renderAlert()}
-
-        <Col
-          xs={{ size: 12 }}
-          md={{ size: 10, offset: 1 }}
-          lg={{ size: 8, offset: 2 }}
-        >
-          {this.renderFields()}
-        </Col>
-
-        {this.renderSubmit({ label: "Login" })}
-      </Form>
+      <Col
+        xs={{ size: 12 }}
+        md={{ size: 10, offset: 1 }}
+        lg={{ size: 8, offset: 2 }}
+      >
+        <FormManager
+          {...this.props}
+          fields={loginFields}
+          namespace={NAMESPACE}
+        />
+      </Col>
     );
   }
 }
@@ -38,14 +32,10 @@ class Login extends FormManager {
 const mapStateToProps = state => state.login;
 
 const mapDispatchToProps = dispatch => ({
-  dispatch: action => dispatch(action),
-  onSubmit: payload =>
-    dispatch({ type: "saga_login", payload, namespace: NAMESPACE })
+  dispatch: action => dispatch(action)
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Login)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

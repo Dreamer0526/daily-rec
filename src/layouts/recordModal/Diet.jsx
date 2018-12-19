@@ -5,27 +5,16 @@ import { Row, Col } from "reactstrap";
 import FormManager from "../../templates/formManager/FormManager";
 import dietFields from "../../fields/dietFields";
 
-const NAMESPACE = "dietModal";
+const NAMESPACE = "diet";
 
-class Diet extends FormManager {
+class Diet extends React.Component {
   constructor(props) {
     super(props);
-
-    this.fields = dietFields;
-    this.namespace = NAMESPACE;
 
     this.handleNext = this.handleNext.bind(this);
   }
 
   handleNext() {
-    this.props.dispatch({
-      namespace: this.namespace,
-      type: "SET_STATE",
-      state: {
-        stagedRecord: this.state.form
-      }
-    });
-
     const { onNext } = this.props;
     if (onNext && typeof onNext === "function") {
       onNext();
@@ -33,6 +22,10 @@ class Diet extends FormManager {
   }
 
   render() {
+    const nextComponent = this.props.hasNext ? (
+      <i class="fas fa-chevron-right fa-2x general-button" />
+    ) : null;
+
     return (
       <Row className="align-items-center">
         <Col xs="1">
@@ -43,15 +36,15 @@ class Diet extends FormManager {
             />
           )}
         </Col>
-        <Col xs="10">{this.renderFields()}</Col>
-        <Col xs="1">
-          {this.props.hasNext && (
-            <i
-              class="fas fa-chevron-right fa-2x general-button"
-              onClick={this.handleNext}
-            />
-          )}
+        <Col xs="10">
+          <FormManager
+            {...this.props}
+            namespace={NAMESPACE}
+            fields={dietFields}
+            submitComponent={nextComponent}
+          />
         </Col>
+        <Col xs="1" />
       </Row>
     );
   }

@@ -4,12 +4,9 @@ import {
 } from "../utils/reduxHelpers";
 import * as formManager from "../templates/formManager/formManagerReducer";
 
-const NAMESPACE = "sportsModal";
+const NAMESPACE = "sports";
 
-const origin = {
-  ...formManager.state,
-  stagedRecord: {}
-};
+const origin = {};
 
 const registry = {
   ...basicRegistry,

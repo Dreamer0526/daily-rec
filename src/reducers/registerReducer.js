@@ -6,9 +6,7 @@ import * as formManager from "../templates/formManager/formManagerReducer";
 
 const NAMESPACE = "register";
 
-const origin = {
-  ...formManager.state
-};
+const origin = {};
 
 const registry = {
   ...basicRegistry,

@@ -8,12 +8,19 @@ import {
   password,
   confirmPassword
 } from "./base/passwords";
+import {
+  submit
+} from "./base/buttons";
 
 const loginFields = {
   email,
   username,
   password,
-  confirmPassword
+  confirmPassword,
+  submit: {
+    ...submit,
+    label: "Register"
+  }
 };
 
 export default loginFields;

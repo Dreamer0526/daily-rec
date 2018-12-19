@@ -7,7 +7,6 @@ import * as formManager from "../templates/formManager/formManagerReducer";
 const NAMESPACE = "profile";
 
 const origin = {
-  ...formManager.state,
   info: {
     username: "",
     email: ""

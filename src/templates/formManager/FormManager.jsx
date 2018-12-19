@@ -23,24 +23,37 @@ class FormManager extends Component {
   }
 
   componentDidMount() {
-    const { namespace, fields } = this;
-    this.props.dispatch(actions.init_fields(namespace, fields));
-
-    this.initFields();
+    this.initState();
+    this.initReducerState();
   }
 
-  initFields() {
+  initState() {
     let { form } = this.state;
-    const { fields } = this;
+    const { fields } = this.props;
 
-    const fieldsList = Object.keys(fields);
-    fieldsList.forEach(name => {
+    Object.keys(fields).forEach(name => {
       const { value } = fields[name];
       if (value instanceof Array) {
         form[name] = [];
       } else {
         form[name] = value;
       }
+    });
+  }
+
+  initReducerState() {
+    const initialState = {
+      alert: {
+        type: "",
+        desc: ""
+      },
+      valid: false
+    };
+
+    this.props.dispatch({
+      namespace: this.props.namespace,
+      type: "SET_STATE",
+      state: initialState
     });
   }
 
@@ -54,25 +67,36 @@ class FormManager extends Component {
   }
 
   handleOnSubmit() {
-    this.props.onSubmit(this.state.form);
+    const action = {
+      type: "saga_submit",
+      namespace: this.props.namespace,
+      payload: {
+        form: this.state.form,
+        fields: this.props.fields
+      }
+    };
+
+    this.props.dispatch(action);
   }
 
   handleClearAlert() {
-    this.props.dispatch(actions.clear_alert(this.namespace));
+    this.props.dispatch(actions.clear_alert(this.props.namespace));
   }
 
-  renderSubmit({ label = "" } = {}) {
+  renderSubmit({ label }) {
+    const buttonComponent = this.props.submitComponent || (
+      <Button color="primary">{label}</Button>
+    );
     return (
-      <Col className="text-center">
-        <Button color="primary" onClick={this.handleOnSubmit}>
-          {label}
-        </Button>
+      <Col className="text-center general-button" onClick={this.handleOnSubmit}>
+        {buttonComponent}
       </Col>
     );
   }
 
   renderAlert() {
-    const { desc, type } = this.props.alert;
+    const { alert = {} } = this.props;
+    const { desc = "", type = "" } = alert;
     const showAlert = !!desc;
 
     return !showAlert ? null : (
@@ -83,7 +107,7 @@ class FormManager extends Component {
   }
 
   renderField(name) {
-    const field = this.fields[name];
+    const field = this.props.fields[name];
     const { type } = field;
 
     switch (type) {
@@ -95,18 +119,26 @@ class FormManager extends Component {
       case "rating":
         return <Rating {...field} name={name} onChange={this.handleOnChange} />;
 
+      case "submit":
+        return this.renderSubmit(field);
+
       default:
         return <Input {...field} name={name} onChange={this.handleOnChange} />;
     }
   }
 
   renderFields() {
-    const fieldsList = Object.keys(this.fields);
+    const fieldsList = Object.keys(this.props.fields);
     return fieldsList.map(name => this.renderField(name));
   }
 
   render() {
-    return null;
+    return (
+      <div>
+        {this.renderAlert()}
+        {this.renderFields()}
+      </div>
+    );
   }
 }
 

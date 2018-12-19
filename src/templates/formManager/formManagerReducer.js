@@ -2,15 +2,6 @@ import {
   validateField
 } from "../../utils/dictionary";
 
-export const state = {
-  alert: {
-    type: "",
-    desc: ""
-  },
-  fields: {},
-  valid: false
-};
-
 export const registry = {
   "validate_form": (state, action) => updateForm(state, action.payload)
 }
@@ -62,14 +53,15 @@ const updateReference = (fields, validation) => {
 
 const updateForm = (state, payload) => {
   let {
+    form,
     fields
-  } = state;
+  } = payload;
   const fieldList = Object.keys(fields);
 
   // loop thru and update field value
   fieldList.forEach(name => {
     const field = fields[name];
-    const value = payload[name];
+    const value = form[name];
 
     fields[name] = {
       ...field,

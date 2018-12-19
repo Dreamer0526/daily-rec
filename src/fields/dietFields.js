@@ -7,6 +7,9 @@ import {
 import {
   coloredRating
 } from "./base/ratings";
+import {
+  submit
+} from "./base/buttons";
 
 const dietFields = {
   date,
@@ -25,7 +28,8 @@ const dietFields = {
   dinner: { ...multiText,
     label: "Dinner"
   },
-  rating: coloredRating
+  rating: coloredRating,
+  submit
 };
 
 export default dietFields;

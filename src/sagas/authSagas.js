@@ -1,6 +1,5 @@
 import {
   put,
-  select,
   takeLatest
 } from "redux-saga/effects";
 import {
@@ -13,29 +12,14 @@ const {
   auth
 } = withServices("auth");
 
-
-function* validateForm(namespace, payload) {
-  yield put({
-    namespace,
-    type: "validate_form",
-    payload
-  });
-
-  const valid = yield select(state => state[namespace].valid);
-  return valid;
-}
-
 function* login(action) {
   const {
     namespace,
     payload
   } = action;
 
-  const result = yield validateForm(namespace, payload);
-  if (!result) return;
-
   try {
-    const response = yield auth.login(payload);
+    const response = yield auth.login(payload.form);
 
     if (response.data.type === "success") {
       localStorage.setItem("access_token", response.data.access_token);
@@ -66,27 +50,36 @@ function* register(action) {
     payload
   } = action;
 
-  const result = yield validateForm(namespace, payload);
-  if (!result) return;
+  const {
+    form
+  } = payload;
 
   try {
-    const response = yield auth.register(payload);
+    const response = yield auth.register(form);
 
-    const alert = {
-      desc: response.data.message,
-      type: response.data.type
-    };
+    if (response.data.type === "success") {
+      yield login({
+        payload
+      });
 
-    yield put(actions.set_error_message(namespace, alert));
+    } else {
+      const alert = {
+        desc: response.data.message,
+        type: response.data.type
+      };
+
+      yield put(actions.set_error_message(namespace, alert));
+    }
 
   } catch (error) {
     yield put(actions.set_error_message(namespace));
   }
 }
 
+
 const authSagas = [
-  takeLatest("saga_login", login),
-  takeLatest("saga_register", register)
+  takeLatest("saga_register", register),
+  takeLatest("saga_login", login)
 ];
 
 export default authSagas;
