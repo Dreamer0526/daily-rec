@@ -41,6 +41,7 @@ class Sports extends React.Component {
             {...this.props}
             namespace={NAMESPACE}
             fields={sportsFields}
+            initialForm={this.props.stagedForm}
             submitComponent={nextComponent}
           />
         </Col>
