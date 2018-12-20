@@ -5,14 +5,10 @@ import { Row, Col, Label } from "reactstrap";
 class Rating extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: 0 };
-
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
   handleOnChange(value) {
-    this.setState({ value });
-
     const { name, onChange } = this.props;
     if (onChange && typeof onChange === "function") {
       onChange(name, value);
@@ -20,8 +16,7 @@ class Rating extends React.Component {
   }
 
   render() {
-    const { desc, label, name, cssFor, ...rest } = this.props;
-    const { value } = this.state;
+    const { desc, label, name, value, cssFor, ...rest } = this.props;
 
     return (
       <Row>

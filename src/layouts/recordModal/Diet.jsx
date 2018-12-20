@@ -23,7 +23,10 @@ class Diet extends React.Component {
 
   render() {
     const nextComponent = this.props.hasNext ? (
-      <i class="fas fa-chevron-right fa-2x general-button" />
+      <i 
+        class="fas fa-chevron-right fa-2x general-button"
+        onClick={this.handleNext} 
+      />
     ) : null;
 
     return (
@@ -41,6 +44,7 @@ class Diet extends React.Component {
             {...this.props}
             namespace={NAMESPACE}
             fields={dietFields}
+            initialForm={this.props.stagedForm}
             submitComponent={nextComponent}
           />
         </Col>

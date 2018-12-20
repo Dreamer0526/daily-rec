@@ -40,6 +40,17 @@ function* submitForm(action) {
       })
       break;
 
+    case "diet":
+    case "sports":
+      yield put({
+        type: "SET_STATE",
+        namespace,
+        state: {
+          stagedForm: payload.form
+        }
+      });
+      break;
+
     default:
       break;
   }

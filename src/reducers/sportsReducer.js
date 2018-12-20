@@ -6,7 +6,9 @@ import * as formManager from "../templates/formManager/formManagerReducer";
 
 const NAMESPACE = "sports";
 
-const origin = {};
+const origin = {
+  stagedForm: {}
+};
 
 const registry = {
   ...basicRegistry,

@@ -4,14 +4,11 @@ import { Row, Col, Label, FormFeedback, Input as InputField } from "reactstrap";
 class Input extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: this.props.value };
-
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
   handleOnChange(event) {
     const { name, value } = event.target;
-    this.setState({ value });
 
     const { onChange } = this.props;
     if (onChange && typeof onChange === "function") {
@@ -20,8 +17,7 @@ class Input extends React.Component {
   }
 
   render() {
-    const { desc, label, name, ...rest } = this.props;
-    const { value } = this.state;
+    const { desc, label, name, value, ...rest } = this.props;
 
     return (
       <Row className="half-margin-bottom">

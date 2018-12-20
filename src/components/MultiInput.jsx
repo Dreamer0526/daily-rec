@@ -3,19 +3,10 @@ import { Row, Col, Label, Input } from "reactstrap";
 import { removeIndex } from "../utils/arrayHelpers";
 
 class MultiInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: [] };
-  }
-
   handleAddItem(event, index) {
     const { name, value } = event.target;
-    let modified = this.state.value;
+    let modified = this.props.value;
     modified[index] = value;
-
-    this.setState({
-      value: modified
-    });
 
     const { onChange } = this.props;
     if (onChange && typeof onChange === "function") {
@@ -24,13 +15,8 @@ class MultiInput extends React.Component {
   }
 
   handleRemoveItem(index) {
-    const { name } = this.props;
-    const { value } = this.state;
+    const { name, value } = this.props;
     const modified = removeIndex(value, index);
-
-    this.setState({
-      value: modified
-    });
 
     const { onChange } = this.props;
     if (onChange && typeof onChange === "function") {
@@ -39,8 +25,7 @@ class MultiInput extends React.Component {
   }
 
   render() {
-    const { desc, label, name, ...rest } = this.props;
-    const { value } = this.state;
+    const { desc, label,value, name, ...rest } = this.props;
 
     return (
       <Row className="half-margin-bottom">

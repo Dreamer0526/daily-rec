@@ -6,6 +6,7 @@ import Rating from "../../components/Rating";
 import MultiInput from "../../components/MultiInput";
 
 import actions from "../../actions";
+import { isEmpty } from "../../utils/objectHelpers";
 
 const origin = {
   form: {}
@@ -28,17 +29,24 @@ class FormManager extends Component {
   }
 
   initState() {
-    let { form } = this.state;
-    const { fields } = this.props;
+    const { initialForm, fields } = this.props;
 
-    Object.keys(fields).forEach(name => {
-      const { value } = fields[name];
-      if (value instanceof Array) {
-        form[name] = [];
-      } else {
-        form[name] = value;
-      }
-    });
+    let form = {}
+    if(initialForm && !isEmpty(initialForm)) {
+      form = initialForm;
+
+    } else {
+      Object.keys(fields).forEach(name => {
+        const { value } = fields[name];
+        if (value instanceof Array) {
+          form[name] = [];
+        } else {
+          form[name] = value;
+        }
+      });
+    }
+
+    this.setState({form})
   }
 
   initReducerState() {
@@ -109,21 +117,22 @@ class FormManager extends Component {
   renderField(name) {
     const field = this.props.fields[name];
     const { type } = field;
+    const value = this.state.form[name];
 
     switch (type) {
       case "multiText":
         return (
-          <MultiInput {...field} name={name} onChange={this.handleOnChange} />
+          <MultiInput {...field} name={name} value={value} onChange={this.handleOnChange} />
         );
 
       case "rating":
-        return <Rating {...field} name={name} onChange={this.handleOnChange} />;
+        return <Rating {...field} name={name} value={value} onChange={this.handleOnChange} />;
 
       case "submit":
         return this.renderSubmit(field);
 
       default:
-        return <Input {...field} name={name} onChange={this.handleOnChange} />;
+        return <Input {...field} name={name} value={value} onChange={this.handleOnChange} />;
     }
   }
 
@@ -133,6 +142,9 @@ class FormManager extends Component {
   }
 
   render() {
+    const {form} = this.state;
+    if (isEmpty(form)) return null;
+
     return (
       <div>
         {this.renderAlert()}
