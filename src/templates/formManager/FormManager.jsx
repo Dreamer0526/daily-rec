@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Row, Col, Button, Alert } from "reactstrap";
+import { Row, Col, Button, Alert, Label } from "reactstrap";
 
 import Input from "../../components/Input";
 import Rating from "../../components/Rating";
 import MultiInput from "../../components/MultiInput";
+import Switch from "../../components/Switch";
 
 import actions from "../../actions";
 import { isEmpty } from "../../utils/objectHelpers";
@@ -33,18 +34,19 @@ class FormManager extends Component {
     const { initialForm, fields } = this.props;
 
     let form = {};
-    if (initialForm && !isEmpty(initialForm)) {
-      form = initialForm;
-    } else {
-      Object.keys(fields).forEach(name => {
-        const { value } = fields[name];
-        if (value instanceof Array) {
-          form[name] = [];
-        } else {
-          form[name] = value;
-        }
-      });
-    }
+    Object.keys(fields).forEach(name => {
+      const { value } = fields[name];
+      if (value instanceof Array) {
+        form[name] = [];
+      } else {
+        form[name] = value;
+      }
+    });
+
+    form = {
+      ...form,
+      ...initialForm
+    };
 
     this.setState({ form });
   }
@@ -171,6 +173,16 @@ class FormManager extends Component {
           <Label size={field.size} xs={{ size: 10, offset: 1 }}>
             {field.text}
           </Label>
+        );
+
+      case "switch":
+        return (
+          <Switch
+            {...field}
+            name={name}
+            value={value}
+            onToggle={this.handleOnChange}
+          />
         );
 
       default:

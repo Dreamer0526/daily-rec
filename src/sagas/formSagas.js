@@ -51,6 +51,14 @@ function* submitForm(action) {
       })
       break;
 
+    case "profile":
+      yield put({
+        type: "saga_patch_settings",
+        namespace,
+        payload
+      })
+      break;
+
     case "records.diet":
     case "records.sports":
       yield put({

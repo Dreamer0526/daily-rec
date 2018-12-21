@@ -1,101 +1,62 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, FormGroup, Col, Label, Input } from "reactstrap";
+import { Col } from "reactstrap";
+
 import FormManager from "../templates/formManager/FormManager";
-import Switch from "../components/Switch";
+import profileFields from "../fields/profileFields";
+import { isEmpty } from "../utils/objectHelpers";
 
 const NAMESPACE = "profile";
 
-const origin = {
-  form: {}
-};
-
-class Profile extends FormManager {
+class Profile extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { ...origin };
-
-    this.namespace = NAMESPACE;
   }
 
-  componentDidMount() {
-    const propExists = Object.keys(this.props.settings).length;
-
-    if (!propExists) {
+  componentWillMount() {
+    if (isEmpty(this.props.settings)) {
       this.props.dispatch({ type: "saga_fetch_settings" });
     }
   }
 
-  onToggle(setting, value) {
-    let { form } = this.state;
-    form[setting] = value;
-    this.setState({ form });
-  }
+  updateFields() {
+    const createSwitchField = (name, value) => ({
+      [name]: {
+        type: "switch",
+        label: name,
+        value
+      }
+    });
 
-  renderInfo() {
-    const { username, email } = this.props.info;
+    let modified = profileFields;
 
-    return (
-      <Col xs={12}>
-        <Label size="lg" xs={{ size: 10, offset: 1 }}>
-          User Info
-        </Label>
-        <FormGroup row>
-          <Label xs={4} className="text-right">
-            User Name:
-          </Label>
-          <Col xs={6}>
-            <Input value={username} disabled />
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label xs={4} className="text-right">
-            Email:
-          </Label>
-          <Col xs={6}>
-            <Input value={email} disabled />
-          </Col>
-        </FormGroup>
-      </Col>
-    );
-  }
-
-  renderSettings() {
     const { settings } = this.props;
+    Object.keys(settings).map(setting => {
+      const value = settings[setting];
+      modified = {
+        ...modified,
+        ...createSwitchField(setting, value)
+      };
+    });
 
-    return (
-      <Col xs={12}>
-        <Label size="lg" xs={{ size: 10, offset: 1 }}>
-          Settings
-        </Label>
-        {Object.keys(settings).map(setting => {
-          const value = settings[setting];
-          return (
-            <Col>
-              <Label xs={4} className="text-right">
-                {setting}:
-              </Label>
-              <Switch
-                onToggle={value => this.onToggle(setting, value)}
-                value={value}
-              />
-            </Col>
-          );
-        })}
-        <Col className="base-margin-top">
-          {this.renderSubmit({ label: "Update" })}
-        </Col>
-      </Col>
-    );
+    return modified;
   }
 
   render() {
+    const { settings } = this.props;
+    if (isEmpty(settings)) return null;
+
+    const fields = this.updateFields();
+
     return (
-      <Form>
-        <Col xs={12}> {this.renderAlert()}</Col>
-        {this.renderInfo()}
-        {this.renderSettings()}
-      </Form>
+      <Col xs="12">
+        <FormManager
+          {...this.props}
+          fields={fields}
+          namespace={NAMESPACE}
+          initialForm={this.props.info}
+        />
+      </Col>
     );
   }
 }
@@ -103,9 +64,7 @@ class Profile extends FormManager {
 const mapStateToProps = state => state.profile;
 
 const mapDispatchToProps = dispatch => ({
-  dispatch: action => dispatch(action),
-  onSubmit: payload =>
-    dispatch({ type: "saga_patch_settings", payload, namespace: NAMESPACE })
+  dispatch: action => dispatch(action)
 });
 
 export default connect(

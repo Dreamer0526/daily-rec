@@ -30,8 +30,12 @@ function* fetchSettings() {
 }
 
 function* patchSettings(action) {
+  const {
+    form
+  } = action.payload;
+
   try {
-    const response = yield profile.patchSettings(action.payload);
+    const response = yield profile.patchSettings(form);
     const settings = response.data;
 
     yield put({
