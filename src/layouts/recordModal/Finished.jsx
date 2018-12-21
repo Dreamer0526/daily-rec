@@ -56,7 +56,7 @@ class Finished extends React.Component {
     return (
       <Row className="text-center">
         <Col xs="12" className="base-margin-bottom">
-          <img src={config.pic} out={status} />
+          <img src={config.pic} alt={status} />
         </Col>
         <Col xs="12" className="base-margin-bottom">
           {config.desc}
@@ -73,7 +73,7 @@ class Finished extends React.Component {
   }
 }
 
-const mapStateToProps = state => state.records.responses;
+const mapStateToProps = state => state.records.finished;
 
 const mapDispatchToProps = dispatch => ({
   dispatch: action => dispatch(action)

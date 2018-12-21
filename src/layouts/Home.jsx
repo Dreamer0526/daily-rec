@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { Col, Label, Button, Badge } from "reactstrap";
 
 import RecordModal from "./recordModal/RecordModal";
+import { isEmpty } from "../utils/objectHelpers";
 
 const origin = {
   showModal: false
@@ -19,10 +20,12 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const propExists = Object.keys(this.props.settings).length;
+    const { dispatch, settings } = this.props;
 
-    if (!propExists) {
-      this.props.dispatch({ type: "saga_fetch_settings" });
+    dispatch({ type: "saga_fetch_records" });
+
+    if (isEmpty(settings)) {
+      dispatch({ type: "saga_fetch_settings" });
     }
   }
 
