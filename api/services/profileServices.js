@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
+const filter = require("../utils/filter");
 
 const settingsSchema = new mongoose.Schema({
   username: {
@@ -13,7 +14,7 @@ const settingsSchema = new mongoose.Schema({
 
 const Settings = mongoose.model("settings", settingsSchema);
 
-router.get('/settings', (req, res) => {
+router.get('/settings', (req, res, next) => {
   const {
     username
   } = req.decoded;
@@ -69,19 +70,5 @@ router.post('/settings', (req, res) => {
     return;
   })
 });
-
-const filter = (doc) => {
-  const result = doc._doc;
-
-  delete result.username;
-
-  for (const key in result) {
-    if (key.startsWith("_")) {
-      delete result[key];
-    }
-  }
-
-  return result;
-}
 
 module.exports = router;

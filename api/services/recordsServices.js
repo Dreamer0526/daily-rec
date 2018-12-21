@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
+const filter = require("../utils/filter");
 
 const recordsSchema = new mongoose.Schema({
   username: String,
@@ -8,6 +9,23 @@ const recordsSchema = new mongoose.Schema({
 });
 
 const Record = mongoose.model("records", recordsSchema);
+
+router.get('/', (req, res) => {
+  const {
+    username
+  } = req.decoded;
+
+  Record.findOne({
+    username
+  }, (err, doc) => {
+    if (err) {
+      res.status(400).send("Unknown error: " + err);
+
+    } else {
+      res.json(filter(doc));
+    }
+  });
+});
 
 router.post('/', (req, res) => {
   const {
