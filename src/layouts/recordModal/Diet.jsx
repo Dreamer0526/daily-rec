@@ -5,56 +5,32 @@ import { Row, Col } from "reactstrap";
 import FormManager from "../../templates/formManager/FormManager";
 import dietFields from "../../fields/dietFields";
 
-const NAMESPACE = "diet";
+const NAMESPACE = "records.diet";
 
 class Diet extends React.Component {
   constructor(props) {
     super(props);
-
-    this.handleNext = this.handleNext.bind(this);
-  }
-
-  handleNext() {
-    const { onNext } = this.props;
-    if (onNext && typeof onNext === "function") {
-      onNext();
-    }
   }
 
   render() {
-    const nextComponent = this.props.hasNext ? (
-      <i 
-        class="fas fa-chevron-right fa-2x general-button"
-        onClick={this.handleNext} 
-      />
-    ) : null;
-
     return (
       <Row className="align-items-center">
-        <Col xs="1">
-          {this.props.hasPrev && (
-            <i
-              class="fas fa-chevron-left fa-2x general-button"
-              onClick={this.props.onPrev}
-            />
-          )}
-        </Col>
-        <Col xs="10">
+        <Col xs="12" md={{ size: 10, offset: 1 }} lg={{ size: 8, offset: 2 }}>
           <FormManager
             {...this.props}
             namespace={NAMESPACE}
             fields={dietFields}
             initialForm={this.props.stagedForm}
-            submitComponent={nextComponent}
+            onSubmit={this.props.onNext}
+            onReset={this.props.onPrev}
           />
         </Col>
-        <Col xs="1" />
       </Row>
     );
   }
 }
 
-const mapStateToProps = state => state.diet;
+const mapStateToProps = state => state.records.diet;
 
 const mapDispatchToProps = dispatch => ({
   dispatch: action => dispatch(action)

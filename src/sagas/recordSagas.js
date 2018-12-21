@@ -1,32 +1,56 @@
 import {
   put,
+  select,
   takeEvery
 } from "redux-saga/effects";
-import actions from "../actions";
-// import withServices from "../services";
+import withServices from "../services";
 
-// const {
-//   profile
-// } = withServices("profile");
+const {
+  records
+} = withServices("records");
 
 
-function* patchRecord(action) {
-  const {
-    payload,
-    namespace
-  } = action;
+function* patchRecords() {
+
+  const form = yield select(state => {
+    const {
+      records
+    } = state;
+
+    let form = {};
+    Object.keys(records).forEach(key => {
+      form[key] = records[key].stagedForm
+    });
+
+    return form;
+  });
 
   try {
-    console.log(payload);
+    yield records.patchRecords(form);
 
+    yield put({
+      namespace: "records",
+      type: "SET_STATE",
+      desc: "Patch records success",
+      state: {
+        patchResponse: "success"
+      }
+    });
 
   } catch (error) {
-    yield put(actions.set_error_message(namespace));
+    yield put({
+      namespace: "records",
+      type: "SET_STATE",
+      desc: "Patch records failed",
+      state: {
+        patchResponse: "failure"
+      }
+    });
   }
 }
 
 const recordSagas = [
-  takeEvery("saga_patch_record", patchRecord)
+  takeEvery("saga_patch_records", patchRecords)
 ];
 
 export default recordSagas;

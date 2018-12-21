@@ -5,10 +5,12 @@ import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
 import Diet from "./Diet";
 import Sports from "./Sports";
+import Finished from "./Finished";
 
 const registry = {
   diet: Diet,
-  sports: Sports
+  sports: Sports,
+  finished: Finished
 };
 
 const origin = {
@@ -37,23 +39,20 @@ class RecordModal extends React.Component {
     const contents = Object.keys(settings).filter(
       key => settings[key] === true
     );
-    return new DoublyLinked(...contents);
+    return new DoublyLinked(...contents, "finished");
   }
 
   onPrev() {
-    const modalToShow = this.contentList.prev();
-
-    if (modalToShow) {
-      this.setState({ modalToShow });
+    const prevModal = this.contentList.prev();
+    if (prevModal) {
+      this.setState({ modalToShow: prevModal });
     }
   }
 
   onNext() {
-    const modalToShow = this.contentList.next();
-
-    if (modalToShow) {
-      this.setState({ modalToShow });
-    }
+    const nextModal = this.contentList.next();
+    const modalToShow = nextModal || "";
+    this.setState({ modalToShow });
   }
 
   render() {

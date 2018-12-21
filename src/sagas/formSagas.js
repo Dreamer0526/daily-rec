@@ -10,7 +10,18 @@ function* validateForm(namespace, payload) {
     type: "validate_form",
     payload
   });
-  const valid = yield select(state => state[namespace].valid);
+
+  const valid = yield select(state => {
+    const statePaths = namespace.split(".");
+
+    let result = state;
+    statePaths.forEach(path => {
+      result = result[path];
+    });
+
+    return result.valid;
+  });
+
   return valid;
 }
 
@@ -40,9 +51,10 @@ function* submitForm(action) {
       })
       break;
 
-    case "diet":
-    case "sports":
+    case "records.diet":
+    case "records.sports":
       yield put({
+        desc: "Stage records",
         type: "SET_STATE",
         namespace,
         state: {

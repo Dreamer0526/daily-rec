@@ -1,11 +1,13 @@
 import authServices from "./authServices";
 import TokenServices from "./tokenServices";
 import ProfileServices from "./profileServices";
+import RecordsServices from "./recordsServices";
 
 let services = {
   "auth": null,
   "token": null,
-  "profile": null
+  "profile": null,
+  "records": null
 }
 
 function findService(service) {
@@ -31,6 +33,12 @@ function findService(service) {
       };
       return;
 
+    case "records":
+      {
+        services = { ...services,
+          "records": new RecordsServices()
+        }
+      }
     default:
       return;
   }

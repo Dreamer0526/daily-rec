@@ -8,7 +8,7 @@ import {
   coloredRating
 } from "./base/ratings";
 import {
-  submit
+  buttonGroup
 } from "./base/buttons";
 
 const dietFields = {
@@ -29,7 +29,10 @@ const dietFields = {
     label: "Dinner"
   },
   rating: coloredRating,
-  submit
+  buttonGroup: {
+    ...buttonGroup,
+    labels: ["Next", "Back"]
+  }
 };
 
 export default dietFields;

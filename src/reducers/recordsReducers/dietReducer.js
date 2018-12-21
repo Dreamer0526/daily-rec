@@ -1,10 +1,10 @@
 import {
   basicRegistry,
   isActionInNamespace
-} from "../utils/reduxHelpers";
-import * as formManager from "../templates/formManager/formManagerReducer";
+} from "../../utils/reduxHelpers";
+import * as formManager from "../../templates/formManager/formManagerReducer";
 
-const NAMESPACE = "diet";
+const NAMESPACE = "records.diet";
 
 const origin = {
   stagedForm: {}

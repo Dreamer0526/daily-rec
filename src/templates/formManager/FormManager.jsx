@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Button, Alert } from "reactstrap";
+import { Row, Col, Button, Alert } from "reactstrap";
 
 import Input from "../../components/Input";
 import Rating from "../../components/Rating";
@@ -18,6 +18,7 @@ class FormManager extends Component {
 
     this.state = { ...origin };
 
+    this.handleOnReset = this.handleOnReset.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleClearAlert = this.handleClearAlert.bind(this);
@@ -31,10 +32,9 @@ class FormManager extends Component {
   initState() {
     const { initialForm, fields } = this.props;
 
-    let form = {}
-    if(initialForm && !isEmpty(initialForm)) {
+    let form = {};
+    if (initialForm && !isEmpty(initialForm)) {
       form = initialForm;
-
     } else {
       Object.keys(fields).forEach(name => {
         const { value } = fields[name];
@@ -46,7 +46,7 @@ class FormManager extends Component {
       });
     }
 
-    this.setState({form})
+    this.setState({ form });
   }
 
   initReducerState() {
@@ -60,6 +60,7 @@ class FormManager extends Component {
 
     this.props.dispatch({
       namespace: this.props.namespace,
+      desc: "Init redux state in FormManager",
       type: "SET_STATE",
       state: initialState
     });
@@ -74,32 +75,32 @@ class FormManager extends Component {
     });
   }
 
+  handleOnReset() {
+    const { onReset } = this.props;
+    if (onReset && typeof onReset === "function") {
+      onReset();
+    }
+  }
+
   handleOnSubmit() {
-    const action = {
+    const { dispatch, onSubmit } = this.props;
+
+    dispatch({
       type: "saga_submit",
       namespace: this.props.namespace,
       payload: {
         form: this.state.form,
         fields: this.props.fields
       }
-    };
+    });
 
-    this.props.dispatch(action);
+    if (onSubmit && typeof onSubmit === "function") {
+      onSubmit();
+    }
   }
 
   handleClearAlert() {
     this.props.dispatch(actions.clear_alert(this.props.namespace));
-  }
-
-  renderSubmit({ label }) {
-    const buttonComponent = this.props.submitComponent || (
-      <Button color="primary">{label}</Button>
-    );
-    return (
-      <Col className="text-center general-button" onClick={this.handleOnSubmit}>
-        {buttonComponent}
-      </Col>
-    );
   }
 
   renderAlert() {
@@ -122,17 +123,58 @@ class FormManager extends Component {
     switch (type) {
       case "multiText":
         return (
-          <MultiInput {...field} name={name} value={value} onChange={this.handleOnChange} />
+          <MultiInput
+            {...field}
+            name={name}
+            value={value}
+            onChange={this.handleOnChange}
+          />
         );
 
       case "rating":
-        return <Rating {...field} name={name} value={value} onChange={this.handleOnChange} />;
+        return (
+          <Rating
+            {...field}
+            name={name}
+            value={value}
+            onChange={this.handleOnChange}
+          />
+        );
 
       case "submit":
-        return this.renderSubmit(field);
+        return (
+          <Col className="text-center">
+            <Button color="primary" onClick={this.handleOnSubmit}>
+              {field.label}
+            </Button>
+          </Col>
+        );
+
+      case "buttonGroup":
+        return (
+          <Row>
+            <Col xs={{ size: 2, offset: 2 }}>
+              <Button color="secondary" onClick={this.handleOnReset}>
+                {field.labels[1]}
+              </Button>
+            </Col>
+            <Col xs={{ size: 2, offset: 2 }}>
+              <Button color="primary" onClick={this.handleOnSubmit}>
+                {field.labels[0]}
+              </Button>
+            </Col>
+          </Row>
+        );
 
       default:
-        return <Input {...field} name={name} value={value} onChange={this.handleOnChange} />;
+        return (
+          <Input
+            {...field}
+            name={name}
+            value={value}
+            onChange={this.handleOnChange}
+          />
+        );
     }
   }
 
@@ -142,7 +184,7 @@ class FormManager extends Component {
   }
 
   render() {
-    const {form} = this.state;
+    const { form } = this.state;
     if (isEmpty(form)) return null;
 
     return (
