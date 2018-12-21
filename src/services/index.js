@@ -1,7 +1,7 @@
-import authServices from "./authServices";
-import TokenServices from "./tokenServices";
-import ProfileServices from "./profileServices";
-import RecordsServices from "./recordsServices";
+import authServices from "./auth/authServices";
+import TokenServices from "./token/tokenServices";
+import ProfileServices from "./profile/profileServices";
+import RecordsServices from "./records/recordsServices";
 
 let services = {
   "auth": null,

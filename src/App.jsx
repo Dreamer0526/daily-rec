@@ -7,14 +7,13 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import saga from "./sagas";
-import reducers from "./reducers";
+import { reducers } from "./reducers";
 
-import Header from "./layouts/Header";
-import Login from "./layouts/Login";
-import Register from "./layouts/Register";
-import Profile from "./layouts/Profile";
-
-import Home from "./layouts/Home";
+import Home from "./views/home/Home";
+import Login from "./views/login/Login";
+import Header from "./views/header/Header";
+import Profile from "./views/profile/Profile";
+import Register from "./views/register/Register";
 
 const sagaMiddleware = createSagaMiddleware();
 

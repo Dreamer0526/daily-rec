@@ -5,7 +5,9 @@ import {
 import {
   redirectToHome
 } from "../utils/locations";
-import actions from "../actions";
+import {
+  actions
+} from "../reducers";
 import withServices from "../services";
 
 const {

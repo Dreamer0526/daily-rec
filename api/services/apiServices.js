@@ -3,6 +3,7 @@ const profileRouter = require("./profileServices");
 const recordsRouter = require("./recordsServices");
 
 router.get('/verify', (req, res) => {
+  delete req.decoded.password;
   res.json(req.decoded);
 });
 

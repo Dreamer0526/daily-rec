@@ -2,7 +2,9 @@ import {
   put,
   takeEvery
 } from "redux-saga/effects";
-import actions from "../actions";
+import {
+  actions
+} from "../reducers";
 import withServices from "../services";
 
 const {
