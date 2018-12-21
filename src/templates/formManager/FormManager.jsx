@@ -166,6 +166,13 @@ class FormManager extends Component {
           </Row>
         );
 
+      case "label":
+        return (
+          <Label size={field.size} xs={{ size: 10, offset: 1 }}>
+            {field.text}
+          </Label>
+        );
+
       default:
         return (
           <Input
