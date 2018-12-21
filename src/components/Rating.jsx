@@ -20,7 +20,7 @@ class Rating extends React.Component {
 
     return (
       <Row>
-        <Col xs={2} className="text-right">
+        <Col xs={3} className="text-right">
           <Label>{label}</Label>
         </Col>
         <Col>

@@ -22,11 +22,11 @@ class Input extends React.Component {
     return (
       <Row className="half-margin-bottom">
         {label && (
-          <Label xs={4} className="text-right">
+          <Label xs={3} className="text-right">
             {label}
           </Label>
         )}
-        <Col xs={label ? 8 : 12}>
+        <Col xs={label ? 9 : 12}>
           <InputField
             {...rest}
             name={name}

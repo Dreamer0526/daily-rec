@@ -25,11 +25,11 @@ class MultiInput extends React.Component {
   }
 
   render() {
-    const { desc, label,value, name, ...rest } = this.props;
+    const { desc, label, value, name, ...rest } = this.props;
 
     return (
       <Row className="half-margin-bottom">
-        <Col xs={2} className="text-right">
+        <Col xs={3} className="text-right">
           <Label>{label}</Label>
         </Col>
         {value.concat("").map((item, index) => (

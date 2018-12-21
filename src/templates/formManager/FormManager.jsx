@@ -123,6 +123,11 @@ class FormManager extends Component {
     const value = this.state.form[name];
 
     switch (type) {
+      case "submit":
+      case "buttonGroup":
+        // Buttons with functionality of submiting will be rendered last
+        return null;
+
       case "multiText":
         return (
           <MultiInput
@@ -143,34 +148,13 @@ class FormManager extends Component {
           />
         );
 
-      case "submit":
-        return (
-          <Col className="text-center">
-            <Button color="primary" onClick={this.handleOnSubmit}>
-              {field.label}
-            </Button>
-          </Col>
-        );
-
-      case "buttonGroup":
-        return (
-          <Row>
-            <Col xs={{ size: 2, offset: 2 }}>
-              <Button color="secondary" onClick={this.handleOnReset}>
-                {field.labels[1]}
-              </Button>
-            </Col>
-            <Col xs={{ size: 2, offset: 2 }}>
-              <Button color="primary" onClick={this.handleOnSubmit}>
-                {field.labels[0]}
-              </Button>
-            </Col>
-          </Row>
-        );
-
       case "label":
         return (
-          <Label size={field.size} xs={{ size: 10, offset: 1 }}>
+          <Label
+            size={field.size}
+            xs={{ size: 10, offset: 1 }}
+            className="base-margin-top half-margin-bottom"
+          >
             {field.text}
           </Label>
         );
@@ -197,6 +181,37 @@ class FormManager extends Component {
     }
   }
 
+  renderSubmit() {
+    const { fields } = this.props;
+    const name = Object.keys(fields).find(name =>
+      ["submit", "buttonGroup"].includes(fields[name].type)
+    );
+
+    const field = fields[name];
+    const { type } = field;
+
+    return type === "submit" ? (
+      <Col className="text-center base-margin-top">
+        <Button color="primary" onClick={this.handleOnSubmit}>
+          {field.label}
+        </Button>
+      </Col>
+    ) : (
+      <Row className="base-margin-top">
+        <Col xs={{ size: 2, offset: 4 }}>
+          <Button color="secondary" onClick={this.handleOnReset}>
+            {field.labels[1]}
+          </Button>
+        </Col>
+        <Col xs={{ size: 2, offset: 0 }}>
+          <Button color="primary" onClick={this.handleOnSubmit}>
+            {field.labels[0]}
+          </Button>
+        </Col>
+      </Row>
+    );
+  }
+
   renderFields() {
     const fieldsList = Object.keys(this.props.fields);
     return fieldsList.map(name => this.renderField(name));
@@ -210,6 +225,7 @@ class FormManager extends Component {
       <div>
         {this.renderAlert()}
         {this.renderFields()}
+        {this.renderSubmit()}
       </div>
     );
   }

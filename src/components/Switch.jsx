@@ -20,12 +20,10 @@ class Switch extends React.Component {
 
     return (
       <Row>
-        {label && (
-          <Label xs={4} className="text-right">
-            {label}
-          </Label>
-        )}
-        <Col xs={label ? 8 : 12}>
+        <Label xs={3} className="text-right">
+          {label}
+        </Label>
+        <Col xs="9">
           <span className="toggle-button">
             <ToggleButton
               name={name}
