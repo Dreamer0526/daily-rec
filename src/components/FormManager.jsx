@@ -6,7 +6,7 @@ import Rating from "./inputs/Rating";
 import Switch from "./inputs/Switch";
 import MultiInput from "./inputs/MultiInput";
 
-import { actions } from "../reducers";
+import { actions } from "../redux";
 import { isEmpty } from "../utils/objectHelpers";
 
 const origin = {

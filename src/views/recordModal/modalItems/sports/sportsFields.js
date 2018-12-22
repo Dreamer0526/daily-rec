@@ -1,12 +1,10 @@
-import {
-  date
-} from "../../../../metadata/fields/date";
-import {
-  multiText
-} from "../../../../metadata/fields/texts";
-import {
+import fields from "../../../../metadata/fields";
+
+const {
+  date,
+  multiText,
   buttonGroup
-} from "../../../../metadata/fields/buttons";
+} = fields;
 
 const sportsFields = {
   date,

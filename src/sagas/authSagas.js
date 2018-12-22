@@ -7,7 +7,7 @@ import {
 } from "../utils/locations";
 import {
   actions
-} from "../reducers";
+} from "../redux";
 import withServices from "../services";
 
 const {

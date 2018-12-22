@@ -1,15 +1,10 @@
-import {
-  date
-} from "../../../../metadata/fields/date";
-import {
-  multiText
-} from "../../../../metadata/fields/texts";
-import {
-  coloredRating
-} from "../../../../metadata/fields/ratings";
-import {
+import fields from "../../../../metadata/fields";
+const {
+  date,
+  multiText,
+  coloredRating,
   buttonGroup
-} from "../../../../metadata/fields/buttons";
+} = fields;
 
 const dietFields = {
   date,

@@ -7,7 +7,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import saga from "./sagas";
-import { reducers } from "./reducers";
+import { reducers } from "./redux";
 
 import Home from "./views/home/Home";
 import Login from "./views/login/Login";

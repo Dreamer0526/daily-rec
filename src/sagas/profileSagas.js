@@ -4,7 +4,7 @@ import {
 } from "redux-saga/effects";
 import {
   actions
-} from "../reducers";
+} from "../redux";
 import withServices from "../services";
 
 const {

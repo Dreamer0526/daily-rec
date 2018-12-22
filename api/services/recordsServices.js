@@ -21,6 +21,9 @@ router.get('/', (req, res) => {
     if (err) {
       res.status(400).send("Unknown error: " + err);
 
+    } else if (!doc) {
+      res.json({});
+
     } else {
       res.json(filter(doc));
     }

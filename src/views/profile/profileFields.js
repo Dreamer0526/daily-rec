@@ -1,15 +1,10 @@
-import {
-  email
-} from "../../metadata/fields/email";
-import {
-  username
-} from "../../metadata/fields/name";
-import {
-  label
-} from "../../metadata/fields/label";
-import {
+import fields from "../../metadata/fields";
+const {
+  email,
+  username,
+  label,
   submit
-} from "../../metadata/fields/buttons";
+} = fields;
 
 const loginFields = {
   label1: {

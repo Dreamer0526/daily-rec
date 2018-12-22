@@ -63,6 +63,7 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  ...state.profile,
   info: {
     username: state.header.authentication.username,
     email: state.header.authentication.email
