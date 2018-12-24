@@ -1,4 +1,10 @@
+const protocol = window && window.location && window.location.protocol;
+const hostname = window && window.location && window.location.hostname;
+const port = '3001'
+
+const baseApiPath = `${protocol}//${hostname}:${port}`
+
 export default {
-  baseApiPath: "http://localhost:3001",
-  authorizedApiPath: "http://localhost:3001/api"
+  baseApiPath,
+  authorizedApiPath: `${baseApiPath}/api`
 }
