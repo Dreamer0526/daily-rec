@@ -15,30 +15,34 @@ function findService(service) {
 
   switch (service) {
     case "auth":
-      services = { ...services,
+      services = {
+        ...services,
         "auth": new authServices()
 
       };
       return;
 
     case "token":
-      services = { ...services,
+      services = {
+        ...services,
         "token": new TokenServices()
       };
       return;
 
     case "profile":
-      services = { ...services,
+      services = {
+        ...services,
         "profile": new ProfileServices()
       };
       return;
 
     case "records":
-      {
-        services = { ...services,
-          "records": new RecordsServices()
-        }
+      services = {
+        ...services,
+        "records": new RecordsServices()
       }
+      break;
+
     default:
       return;
   }

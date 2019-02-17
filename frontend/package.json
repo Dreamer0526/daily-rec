@@ -22,12 +22,11 @@
     "redux-saga": "^0.16.2"
   },
   "scripts": {
-    "start": "concurrently 'npm run client' 'npm run server'",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "client": "react-scripts start",
-    "server": "nodemon ./api"
+    "client": "react-scripts start"
   },
   "eslintConfig": {
     "extends": "react-app"

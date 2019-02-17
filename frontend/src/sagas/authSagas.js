@@ -56,8 +56,18 @@ function* register(action) {
     form
   } = payload;
 
+  const {
+    username,
+    password,
+    email
+  } = form
+
   try {
-    const response = yield auth.register(form);
+    const response = yield auth.register({
+      user_name: username,
+      password,
+      email
+    });
 
     if (response.data.type === "success") {
       yield login({
