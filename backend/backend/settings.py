@@ -126,3 +126,7 @@ STATIC_URL = '/static/'
 
 
 CORS_ORIGIN_WHITELIST = ('localhost:3000',)
+
+
+# MY SETTINGS
+SECRET = '------ BEGIN DAILYREC SECRET ------/0O0oO00Oooo0OO0oOO'

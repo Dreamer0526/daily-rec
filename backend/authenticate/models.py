@@ -7,5 +7,13 @@ class User(models.Model):
     password = models.CharField(max_length=200)
     email = models.CharField(max_length=100, unique=True)
 
+    def as_dict(self):
+        return {
+          'user_id': self.user_id,
+          'user_name': self.user_name,
+          'password': self.password,
+          'email': self.email
+        }
+
     def __str__(self):
         return 'User name: ' + self.user_name
