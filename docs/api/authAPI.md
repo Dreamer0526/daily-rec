@@ -1,3 +1,31 @@
+# Detail Design
+
+1. Register API
+
+```mermaid
+  graph LR;
+    A[INPUT: <br/> Registration Data] --> B{User Existing?}
+    B -- N --> C{Email Occupied?}
+    B -- Y --> E(Return Error)
+    C -- N --> D[Create user in DB]
+    C -- Y --> E
+    D -- success --> Z(Return)
+    D -- fail --> E
+```
+
+2. Login API
+
+```mermaid
+  graph LR;
+    A[INPUT: <br/> Login Data] --> B{User name provided?}
+    B -- Y --> C{Password provided?}
+    B -- N --> E(Return Error)
+    C -- Y --> D{Username and <br/>  password matched?}
+    C -- N --> E
+    D -- Y --> Z(Return access token)
+    D -- N --> E
+```
+
 # Specification (YAML)
 
 ```yaml
