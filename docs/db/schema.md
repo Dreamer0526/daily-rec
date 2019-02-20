@@ -1,6 +1,55 @@
 # Tables Design
 
-- USER：user_name(pk), password, email(unique), user_id
-- TABLE: created_by(fk, user:user_id), table_name, table_id
-- FIELD: belongs_to(fk, table:table_id), field_name, data_type, field_id
-- RECORD: record_of(fk, field:field_id), created_at, value(SQL ANYDATA)
+
+```yaml
+- USER
+  attributes:
+    user_name: 
+      type: VARCHAR(20)
+    password:
+      type: VARCHAR(200)
+    email:
+      type: VARCHAR(100)
+    user_id:
+      type: INT
+  constraints:
+    user_name: Primary Key
+    email: UNIQUE
+
+- TABLE
+  attributes:
+    created_by:
+      type: INT
+    table_name:
+      type: VARCHAR(20)
+    is_enabled:
+      type: BOOLEAN
+    table_id:
+      type: INT
+  constraints:
+    created_by: FOREIGN KEY USER:user_id
+
+- FIELD:
+  attributes:
+    belongs_to:
+      type: INT
+    field_name:
+      type: VARCHAR(20)
+    data_type:
+      type: ENUM('SMALLINT', 'MULTISET', 'VARCHAR', 'TEXT')
+    field_id: 
+      type: INT
+  constraints:
+    belongs_to: FOREIGN KEY TABLE:table_id
+
+- RECORD:
+  attributes:
+    record_of:
+      type: INT
+    created_at:
+      type: TIMESTAMP
+    value:
+      type: ANYDATA
+  constraints:
+    record_of: FOREIGN KEY FIELD:field_id   
+```
