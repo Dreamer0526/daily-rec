@@ -8,7 +8,10 @@ class AuthenticateMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
 
-        if not request.get_full_path().startswith('/auth/'):
+        is_auth_request = request.get_full_path().startswith('/auth/')
+        is_csrf_request = request.get_full_path().startswith('/csrf/')
+
+        if not is_auth_request and not is_csrf_request:
       
             authorization = request.META.get('HTTP_AUTHORIZATION').strip('Bearer ')
 

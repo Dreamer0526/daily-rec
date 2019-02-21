@@ -25,7 +25,9 @@ SECRET_KEY = 'q#e6t8w$%exf#z(7imr8ge@5=rlz2ufix2v#h1ipdr+21y_)t2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost'
+]
 
 
 # Application definition
@@ -40,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'authenticate.apps.AuthenticateConfig'
+    'authenticate.apps.AuthenticateConfig',
+    'csrf.apps.CsrfConfig'
 ]
 
 MIDDLEWARE = [
@@ -52,7 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'middlewares.authenticate.AuthenticateMiddleware'
+    'middlewares.authenticate.AuthenticateMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -126,7 +129,39 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-CORS_ORIGIN_WHITELIST = ('localhost:3000',)
+#CORS
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_WHITELIST = (
+  'localhost:3000',
+  '127.0.0.1:3000'
+)
+
+CORS_ALLOW_METHODS = (
+    'OPTIONS',
+    'DELETE',
+    'PATCH',
+    'POST',
+    'VIEW',
+    'GET',
+    'PUT',
+)
+
+CORS_ALLOW_HEADERS = ( 
+  'x-requested-with',
+  'withCredentials',
+  'accept-encoding',
+  'XMLHttpRequest', 
+  'authorization', 
+  'content-type',
+  'x-csrftoken',
+  'user-agent',
+  'X_FILENAME',
+  'origin',
+  'Pragma', 
+  'dnt',
+)
 
 
 # MY SETTINGS
