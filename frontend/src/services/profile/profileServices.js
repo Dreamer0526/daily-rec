@@ -1,5 +1,5 @@
 import axios from "axios";
-import AuthorizedService from "../authorizedService";
+import { AuthorizedService } from "../baseServices";
 import {
   pathToProfileSettings
 } from "./profileApiPaths";

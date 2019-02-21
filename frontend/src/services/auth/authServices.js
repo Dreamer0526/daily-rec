@@ -1,18 +1,21 @@
 import axios from "axios";
+import { CsrfService } from "../baseServices";
 import {
   pathToRegister,
   pathToLogin
 } from "./authApiPaths";
 
-class authServices {
+class authServices extends CsrfService {
   register(form) {
     const url = pathToRegister;
-    return axios.post(url, form);
+    const { headers } = this;
+    return axios.post(url, form, { headers });
   }
 
   login(form) {
     const url = pathToLogin;
-    return axios.post(url, form);
+    const { headers } = this;
+    return axios.post(url, form, { headers });
   }
 }
 
